@@ -38,8 +38,9 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "projecthome";
 $route['404_override'] = '';
+$route['banana'] = 'banking';
 
 
 /* End of file routes.php */

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo $title ?> - Bank of Gilead</title>
+	<title><?php echo $title ?> </title>
     
 	<style type="text/css">
 
@@ -64,4 +64,3 @@
 	</style>
 </head>
 <body>
-	<h1>Bank of Gilead</h1>

@@ -80,8 +80,9 @@
 
 	<div id="body">
                 <h2>Welcome</h2>
-		<p>This the home page of our term project. </p>
+		<p>This is the home page of our term project.</p>
                 <h2>Project Proposal</h2>
+                
 	</div>
 
 	<p class="footer">CS353 Group 8 - 2014 Bilkent University</p>
