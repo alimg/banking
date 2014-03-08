@@ -82,6 +82,7 @@
                 <h2>Welcome</h2>
 		<p>This is the home page of our term project.</p>
                 <h2>Project Proposal</h2>
+                <p>You can access project proposeal <a href="proposal.pdf">here</a></p>
                 
 	</div>
 
