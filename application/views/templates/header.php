@@ -31,6 +31,15 @@
 		margin: 0 0 14px 0;
 		padding: 14px 15px 10px 15px;
     }
+    #header .logout{
+        font-size: 18px;
+        display: inline;
+        float: right;
+    }
+    #header a:link {color:#ddddff;}
+    #header a:visited {color:#ddddff;}
+    #header a:hover {color:#ddddff;}
+    #header a:active {color:#ddddff;}
 
 	h1 {
 		color: #444;
@@ -77,6 +86,9 @@
 <body>
 <div id="header">
     <?php echo $title ?>
+    <?php if(isset($showlogout)){ ?>
+            <div class="logout"><a href="logout">Logout</a></div>
+    <?php }?>
 </div>
 <div id="body">
     
