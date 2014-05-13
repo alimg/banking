@@ -91,7 +91,7 @@ CREATE TABLE account_card(card_number CHAR(16) PRIMARY KEY,
 	
 CREATE TABLE credit_card(card_number CHAR(16) PRIMARY KEY,
 	limit_of_card INTEGER,
-	statement_date DATE,
+	statement_date INTEGER,
 	FOREIGN KEY (card_number) REFERENCES card(card_number)) ENGINE=InnoDB;
 	
 CREATE TABLE installment(id CHAR(8) PRIMARY KEY,
@@ -193,11 +193,11 @@ CREATE TABLE borrowing(loan_id CHAR(8),
 	FOREIGN KEY (cid) REFERENCES customer(id),
 	FOREIGN KEY (branch_name, bank_id) REFERENCES branch(name,bank_id)) ENGINE=InnoDB;
 	
-CREATE TABLE credit_cards(customer_number CHAR(12),
-	cid CHAR(8),
-	PRIMARY KEY(customer_number),
-	FOREIGN KEY (customer_number) REFERENCES credit_card(card_number),
-	FOREIGN KEY (cid) REFERENCES customer(id)) ENGINE=InnoDB;
+CREATE TABLE credit_cards(cust_id CHAR(8),
+	card_number CHAR(16),
+	PRIMARY KEY(card_number),
+	FOREIGN KEY (card_number) REFERENCES credit_card(card_number),
+	FOREIGN KEY (cust_id) REFERENCES customer(id)) ENGINE=InnoDB;
 
 
 
@@ -208,3 +208,5 @@ INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent'
 INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
 INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
 INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
+
+
