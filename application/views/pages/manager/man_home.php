@@ -6,6 +6,12 @@
     p.addClass('selected');
     $("#sub_page").load("managerHome/"+page);
   }
+  function deleteAtm(atm_id){
+	$.ajax({ url: "managerHome/deleteAtm/"+atm_id})
+                .done(function(data) {
+				 location.reload();
+                });
+  }
 </script>
 
 
@@ -43,8 +49,10 @@
 			<td>$row->branch_name</td>
 			<td>$row->address</td>
 			<td>$row->balance</td>
+			<td><button onclick=\"deleteAtm($row->atm_id)\" >Delete Atm</button> </td>
 		</tr>";
 		}
+		
 	}
   ?>
  </tbody>
