@@ -18,6 +18,7 @@ Class Bank extends CI_Model
    }
  }
  
+ 
 }
 ?>
  
