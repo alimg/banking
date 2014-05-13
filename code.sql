@@ -207,4 +207,4 @@ INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
 INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
 INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
 INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
-
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');

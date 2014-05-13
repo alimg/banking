@@ -43,8 +43,7 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $uid=$session_data['username'];
+        $uid=$data['username'] = $session_data['username'];
         $data['accounts'] = $this->account->getCustomerAccounts($uid);
         $this->load->view('pages/customer/account',$data);
     }
@@ -58,8 +57,9 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/bills');
+        $uid=$data['username'] = $session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/bills',$data);
     }
     
     
