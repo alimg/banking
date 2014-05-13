@@ -84,6 +84,7 @@
                 <h2>Project Proposal</h2>
                 <p>You can access project proposeal <a href="res/proposal.pdf">here</a></p>
                 <p><a href="res/er_diagram.png">ER diagram</a></p>
+                <p><a href="banking">Banking</a></p>
 	</div>
 
 	<p class="footer">CS353 Group 8 - 2014 Bilkent University</p>

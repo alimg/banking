@@ -1,20 +1,19 @@
 <?php
 Class User extends CI_Model
-{
+{/*
+ function __construct()
+ {
+   parent::__construct();
+   $this->load->model('user','',TRUE);
+ }*/
  function login($username, $password)
  {
-    echo " ddddd ";
-    echo $username +"ddddd"+ $password;
-   //$this -> db -> select('username, password');
-  // $this -> db -> from('user');
    $this -> db -> where('username', $username);
    $this -> db -> where('password', $password);
    $this -> db -> limit(1);
 
    $query = $this->db->get('user');
-   
-   print_r($query);
-   
+      
    if($query -> num_rows() == 1)
    {
      // 
@@ -25,6 +24,19 @@ Class User extends CI_Model
      return false;
    }
  }
+ function isCustomer($userid) {
+   $this -> db -> where('id', $userid);
+   $this -> db -> limit(1);
+
+   $query = $this->db->get('customer');
+      
+   if($query -> num_rows() == 1) {
+     return $query->result();
+   } else {
+     return false;
+   }
+ }
+ 
 }
 ?>
  

@@ -11,12 +11,13 @@ class Login extends CI_Controller {
  function index()
  {
     $data['title'] = "The Bank of Isengard";
-    $this->load->view('templates/header',$data);
     //This method will have the credentials validation
     if($this->check_database() == FALSE)
     {
+        $this->load->view('templates/header',$data);
         //Field validation failed.  User redirected to login page
         $this->load->view('pages/home');
+        $this->load->view('templates/footer',$data);
         echo "Error: Username or password is wrong";
     }
     else
@@ -37,7 +38,7 @@ class Login extends CI_Controller {
         }
         
    }
-    $this->load->view('templates/footer',$data);
+    //
 
  }
 
@@ -50,8 +51,6 @@ class Login extends CI_Controller {
    $username = $_POST['userid'];
    $password = $_POST['password'];
 
-    echo $username;
-    echo $password;
    //query the database
    $result = $this->user->login($username, $password);
    if($result)
