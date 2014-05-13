@@ -9,7 +9,7 @@ class managerHome extends CI_Controller {
 		$this->load->model('user','',TRUE);
         $this->load->model('bank','',TRUE);
 		$this->load->model('manager','',TRUE);
-        
+        $this->load->model('branch','',TRUE);
     }
     
     public function index(){
@@ -24,6 +24,8 @@ class managerHome extends CI_Controller {
             $data['title'] = $this->bank->get()[0]->name;
             $data['manager'] = $manager;
             $data['showlogout']=true;
+			
+			$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
             $this->load->view('templates/header',$data);
             $this->load->view('pages/managerHome');
             $this->load->view('templates/footer',$data);

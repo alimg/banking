@@ -25,6 +25,17 @@ Class Branch extends CI_Model
      return false;
    }
  }
+ function getBranchList($bankId){
+	$this->db->where('bank_id', $bankId);
+
+	$query = $this->db->get('branch');
+	if($query -> num_rows() > 0) {
+		return $query->result();
+	}else {
+		return false;
+	}
+
+ }
  
 }
 ?>
