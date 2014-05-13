@@ -1,5 +1,5 @@
 <p>Your Accounts:</p>
-<table class="reference notranslate"> 
+<table class="table"> 
  <tbody>
   <tr>
     <th style="width:30%">Account Id</th>
@@ -7,11 +7,18 @@
     <th style="width:20%">Branch</th>
     <th style="width:20%">Balance</th>
   </tr>
-  <tr>
-    <td><a href="att_select_autofocus.asp">autofocus</a><span class="new">New</span></td>
-    <td>autofocus</td>
-    <td>Specifies that the drop-down list should automatically get focus when 
-	the page loads</td>
-  </tr>
+  <?php 
+  if($accounts){
+  foreach($accounts as $row) {
+      echo "
+      <tr>
+        <td>$row->id</td>
+        <td>$row->IBAN</td>
+        <td>$row->branch_name</td>
+        <td>$row->balance</td>
+      </tr>";
+  }
+  }
+  ?>
  </tbody>
 </table>

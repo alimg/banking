@@ -204,4 +204,7 @@ CREATE TABLE credit_cards(customer_number CHAR(12),
 INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
 INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('root', 'Afsg', 'Sad', 'ankara', '2014-05-13');
 INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
+INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
 

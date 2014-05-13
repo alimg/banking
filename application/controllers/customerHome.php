@@ -8,6 +8,7 @@ class CustomerHome extends CI_Controller {
         parent::__construct();
         $this->load->model('user','',TRUE);
         $this->load->model('bank','',TRUE);
+        $this->load->model('account','',TRUE);
     }
     
     public function index()
@@ -24,7 +25,7 @@ class CustomerHome extends CI_Controller {
             $data['customer'] = $customer;
             $data['showlogout']=true;
             $this->load->view('templates/header',$data);
-            $this->load->view('pages/customerHome');
+            $this->load->view('pages/customerHome',$data);
             $this->load->view('templates/footer',$data);
         }
         else
@@ -43,7 +44,9 @@ class CustomerHome extends CI_Controller {
         }
         $session_data = $this->session->userdata('logged_in');
         $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/account');
+        $uid=$session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/account',$data);
     }
     
     
