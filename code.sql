@@ -14,7 +14,7 @@ CREATE TABLE customer (id CHAR(8) PRIMARY KEY,
 	FOREIGN KEY (id) REFERENCES user(username)) ENGINE=InnoDB;
 	
 CREATE TABLE bank(bank_id CHAR(8) PRIMARY KEY,
-	name CHAR(12)) ENGINE=InnoDB;
+	name CHAR(50)) ENGINE=InnoDB;
 	
 CREATE TABLE branch(name CHAR(12) ,
 	bank_id CHAR(8),
@@ -198,3 +198,10 @@ CREATE TABLE credit_cards(customer_number CHAR(12),
 	PRIMARY KEY(customer_number),
 	FOREIGN KEY (customer_number) REFERENCES credit_card(card_number),
 	FOREIGN KEY (cid) REFERENCES customer(id)) ENGINE=InnoDB;
+
+
+
+INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('root', 'Afsg', 'Sad', 'ankara', '2014-05-13');
+INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
+

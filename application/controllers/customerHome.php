@@ -7,6 +7,7 @@ class CustomerHome extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('user','',TRUE);
+        $this->load->model('bank','',TRUE);
     }
     
     public function index()
@@ -19,7 +20,7 @@ class CustomerHome extends CI_Controller {
             $customer=$this->user->isCustomer($uid);
             
             $data['username'] = $session_data['username'];
-            $data['title'] = "The Bank of Isengard";
+            $data['title'] = $this->bank->get()[0]->name;
             $data['customer'] = $customer;
             $data['showlogout']=true;
             $this->load->view('templates/header',$data);
