@@ -265,8 +265,62 @@ class managerHome extends CI_Controller {
 		}
 	
 	}
+	public function add_employee(){
+		if($this->session->userdata('logged_in'))
+			{
+			   $session_data = $this->session->userdata('logged_in');
+				
+				$uid=$session_data['username'];
+				$manager=$this->manager->isManager($uid);
+				
+				$data['username'] = $session_data['username'];
+				$data['title'] = $this->bank->get()[0]->name;
+				$data['manager'] = $manager;
+				$data['showlogout']=true;
+				$this->load->view('pages/manager/add_employee', $data);
+				if (isset($_POST['submit'])){
+				
+					if (!(empty($_POST['salary'])) && !(empty($_POST['name']) )&&  !empty($_POST['surname']) ){
+						$salary = $_POST['salary'];
+						$name = $_POST['name'];
+						$surname = $_POST['surname'];
+						$phone_number = $_POST['phone_number'];
+						$address = $_POST['address'];
+						$id = $this->unique_id();
+						$this->staff->add($id,$salary,$name,$surname, $phone_number,$address );
+						
+						if(new_manager == true){
+						
+						}
+						if(new_clerk ==true ){
+						}
+						if(new_assistant == true){
+						}
+						
+					
+					}
+					
+					else{
+						echo "<script>
+						alert('Please enter fill all text fields!');
+						</script>";
+					}
+					
+				}
+				
+				 
+				
+			}
+			else
+			{
+				//If no session, redirect to login page
+				redirect('login', 'refresh');
+			}
 	
-	
+	}
+	function unique_id($l = 8) {
+    return substr(md5(uniqid(mt_rand(), true)), 0, $l);
+	}
 	
 	
 }

@@ -35,11 +35,29 @@ Class staff extends CI_Model
 	$sql="update staff set salary ='$salary' where id='$id'";
 
 	$query = $this->db->query($sql);
-
-
  }
- 
- 
+ function addManager($id,$admin){
+	$row = array (
+      'id' => $id,
+	  'admin' => $admin
+    );
+   $this -> db -> insert('manager', $row);
+ }
+ function addClerk($id,$title){
+	$row = array (
+      'id' => $id,
+	  'title' => $title
+    );
+   $this -> db -> insert('clerk', $row);
+ }
+  function addAssistant($id,){
+	$row = array (
+      'id' => $id
+	
+    );
+   $this -> db -> insert('customer_assistant', $row);
+ }
+
 
 	 
  

@@ -1,6 +1,9 @@
 <?php
 Class Branch extends CI_Model
 {
+  function unique_id($l = 8) {
+    return substr(md5(uniqid(mt_rand(), true)), 0, $l);
+  }
  function add($bankId,$name,$address)
  {
     $row = array (
