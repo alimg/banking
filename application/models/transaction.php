@@ -1,5 +1,5 @@
 <?php
-Class User extends CI_Model
+Class Transaction extends CI_Model
 {
  function transaction($cid, $aid, $atm_id, $amount,$date, $type )
  {

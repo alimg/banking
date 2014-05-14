@@ -10,7 +10,7 @@ CREATE TABLE customer (id CHAR(8) PRIMARY KEY,
 	name_first VARCHAR(22),
 	name_last VARCHAR(16),
 	address VARCHAR(50),
-	birthdate DATE,
+	birthdate DATETIME,
 	FOREIGN KEY (id) REFERENCES user(username)) ENGINE=InnoDB;
 	
 CREATE TABLE bank(bank_id CHAR(8) PRIMARY KEY,
@@ -29,14 +29,14 @@ CREATE TABLE account (id CHAR(8) PRIMARY KEY,
 	IBAN VARCHAR(34),
 	balance DOUBLE,
 	currency CHAR(3),
-	dateCreated DATE,
+	dateCreated DATETIME,
 	FOREIGN KEY (bank_id) REFERENCES branch(bank_id),
 	FOREIGN KEY (branch_name) REFERENCES branch(name)) ENGINE=InnoDB;
 	
 CREATE TABLE saving_account (id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
-	date_start DATE,
-	date_end DATE,
+	date_start DATETIME,
+	date_end DATETIME,
 	FOREIGN KEY (id) REFERENCES account(id)) ENGINE=InnoDB;
 	
 CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
@@ -45,8 +45,8 @@ CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE loan(loan_id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
-	date_given DATE,
-	date_due DATE,
+	date_given DATETIME,
+	date_due DATETIME,
 	is_approved BOOLEAN);
 	
 CREATE TABLE staff (id CHAR(8) PRIMARY KEY,
@@ -70,7 +70,7 @@ CREATE TABLE manager(id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE bills(bill_id CHAR(8) PRIMARY KEY,
 	amount DOUBLE,
-	date DATE);
+	date DATETIME);
 	
 CREATE TABLE corporation(company_id CHAR(8) PRIMARY KEY,
 	name VARCHAR(20),
@@ -82,7 +82,7 @@ CREATE TABLE atm(atm_id CHAR(8),
 	PRIMARY KEY(atm_id)) ENGINE=InnoDB;
 	
 CREATE TABLE card(card_number CHAR(16) PRIMARY KEY,
-	valid_until DATE,
+	valid_until DATETIME,
 	is_approved BOOLEAN,
 	PIN CHAR(4)) ENGINE=InnoDB;
 	
@@ -100,7 +100,7 @@ CREATE TABLE installment(id CHAR(8) PRIMARY KEY,
 CREATE TABLE sub_installment(id INTEGER,
 	sub_id INTEGER,
 	amount DOUBLE,
-	due_date DATE,
+	due_date DATETIME,
 	PRIMARY KEY (id,sub_id)) ENGINE=InnoDB;
 
 CREATE TABLE customer_accounts(cid CHAR(8),
@@ -113,9 +113,9 @@ CREATE TABLE money_transfers(to_id CHAR(8),
 	from_id CHAR(8),
 	cid CHAR(8),
 	amount INTEGER,
-	date DATE,
+	date DATETIME,
 	description VARCHAR(50),
-	PRIMARY KEY(to_id, from_id, cid),
+	PRIMARY KEY(to_id, from_id, cid, date),
 	FOREIGN KEY (to_id) REFERENCES account (id),
 	FOREIGN KEY (from_id) REFERENCES account (id),
 	FOREIGN KEY (cid) REFERENCES customer(id)) ENGINE=InnoDB;
@@ -129,7 +129,7 @@ CREATE TABLE transactions(cid CHAR(8),
 	aid CHAR(8),
 	atm_id CHAR(8),
 	amount INTEGER,
-	date DATE,
+	date DATETIME,
 	type CHAR(8),
 	CHECK (type IN ('deposit', 'withdraw')),
 	PRIMARY KEY (cid, aid, atm_id),
@@ -138,7 +138,7 @@ CREATE TABLE transactions(cid CHAR(8),
 	FOREIGN KEY (atm_id) REFERENCES atm(atm_id)) ENGINE=InnoDB;
 	
 CREATE TABLE loan_payments(loan_id CHAR(8),
-	date DATE,
+	date DATETIME,
 	amount INTEGER,
 	cid CHAR(8),
 	PRIMARY KEY(loan_id, date),
@@ -148,7 +148,6 @@ CREATE TABLE loan_payments(loan_id CHAR(8),
 CREATE TABLE works_at (id CHAR(8) PRIMARY KEY,
 	bank_id CHAR(8),
 	bname CHAR(12),
-	name VARCHAR(12),
 	FOREIGN KEY (id) REFERENCES staff(id),
 	FOREIGN KEY (bank_id, bname) REFERENCES branch(bank_id, name)) ENGINE=InnoDB;
 	

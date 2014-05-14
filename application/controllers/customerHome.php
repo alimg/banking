@@ -19,7 +19,10 @@ class CustomerHome extends CI_Controller {
             
             $uid=$session_data['username'];
             $customer=$this->user->isCustomer($uid);
-            
+            if(!$customer){
+                echo"yuo not custmoer";
+                return;
+            }
             $data['username'] = $session_data['username'];
             $data['title'] = $this->bank->get()[0]->name;
             $data['customer'] = $customer;
@@ -82,8 +85,9 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/transfer');
+        $uid=$data['username'] = $session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/transfer',$data);
     }
     
     
