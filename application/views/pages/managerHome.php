@@ -20,15 +20,13 @@ if ($manager==false){
 	<ul class="tabbar">
     <li><a class="tab-button" onclick="openPage(this,'man_home')">Home</a></li>
     <li><a class="tab-button" onclick="openPage(this,'atm_management')">Atm Management</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'requests')">Requests</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'transfer')">Money Transfer</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'updateinfo')">Update Info</a></li>
+    <li><a class="tab-button" onclick="openPage(this,'employment_management')">Employment Management</a></li>
+    <li><a class="tab-button" onclick="openPage(this,'reports')">Reports</a></li>
+	<li><a class="tab-button" onclick="openPage(this,'manager_update_info')">Update Info</a></li>
   </ul>
 
-	
-
   <div id="sub_page">
-    ..
+    ...
   </div>
 </div>
 </div>
