@@ -97,5 +97,7 @@ p.footer{
 .tabbar a {
     text-decoration: none
 }
-
+.toggler {
+    cursor:pointer;
+}
 

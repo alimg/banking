@@ -10,11 +10,11 @@ CREATE TABLE customer (id CHAR(8) PRIMARY KEY,
 	name_first VARCHAR(22),
 	name_last VARCHAR(16),
 	address VARCHAR(50),
-	birthdate DATE,
+	birthdate DATETIME,
 	FOREIGN KEY (id) REFERENCES user(username)) ENGINE=InnoDB;
 	
 CREATE TABLE bank(bank_id CHAR(8) PRIMARY KEY,
-	name CHAR(12)) ENGINE=InnoDB;
+	name CHAR(50)) ENGINE=InnoDB;
 	
 CREATE TABLE branch(name CHAR(12) ,
 	bank_id CHAR(8),
@@ -29,14 +29,14 @@ CREATE TABLE account (id CHAR(8) PRIMARY KEY,
 	IBAN VARCHAR(34),
 	balance DOUBLE,
 	currency CHAR(3),
-	dateCreated DATE,
+	dateCreated DATETIME,
 	FOREIGN KEY (bank_id) REFERENCES branch(bank_id),
 	FOREIGN KEY (branch_name) REFERENCES branch(name)) ENGINE=InnoDB;
 	
 CREATE TABLE saving_account (id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
-	date_start DATE,
-	date_end DATE,
+	date_start DATETIME,
+	date_end DATETIME,
 	FOREIGN KEY (id) REFERENCES account(id)) ENGINE=InnoDB;
 	
 CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
@@ -45,8 +45,8 @@ CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE loan(loan_id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
-	date_given DATE,
-	date_due DATE,
+	date_given DATETIME,
+	date_due DATETIME,
 	is_approved BOOLEAN);
 	
 CREATE TABLE staff (id CHAR(8) PRIMARY KEY,
@@ -70,7 +70,7 @@ CREATE TABLE manager(id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE bills(bill_id CHAR(8) PRIMARY KEY,
 	amount DOUBLE,
-	date DATE);
+	date DATETIME);
 	
 CREATE TABLE corporation(company_id CHAR(8) PRIMARY KEY,
 	name VARCHAR(20),
@@ -82,7 +82,7 @@ CREATE TABLE atm(atm_id CHAR(8),
 	PRIMARY KEY(atm_id)) ENGINE=InnoDB;
 	
 CREATE TABLE card(card_number CHAR(16) PRIMARY KEY,
-	valid_until DATE,
+	valid_until DATETIME,
 	is_approved BOOLEAN,
 	PIN CHAR(4)) ENGINE=InnoDB;
 	
@@ -91,7 +91,7 @@ CREATE TABLE account_card(card_number CHAR(16) PRIMARY KEY,
 	
 CREATE TABLE credit_card(card_number CHAR(16) PRIMARY KEY,
 	limit_of_card INTEGER,
-	statement_date DATE,
+	statement_date INTEGER,
 	FOREIGN KEY (card_number) REFERENCES card(card_number)) ENGINE=InnoDB;
 	
 CREATE TABLE installment(id CHAR(8) PRIMARY KEY,
@@ -100,7 +100,7 @@ CREATE TABLE installment(id CHAR(8) PRIMARY KEY,
 CREATE TABLE sub_installment(id INTEGER,
 	sub_id INTEGER,
 	amount DOUBLE,
-	due_date DATE,
+	due_date DATETIME,
 	PRIMARY KEY (id,sub_id)) ENGINE=InnoDB;
 
 CREATE TABLE customer_accounts(cid CHAR(8),
@@ -113,9 +113,9 @@ CREATE TABLE money_transfers(to_id CHAR(8),
 	from_id CHAR(8),
 	cid CHAR(8),
 	amount INTEGER,
-	date DATE,
+	date DATETIME,
 	description VARCHAR(50),
-	PRIMARY KEY(to_id, from_id, cid),
+	PRIMARY KEY(to_id, from_id, cid, date),
 	FOREIGN KEY (to_id) REFERENCES account (id),
 	FOREIGN KEY (from_id) REFERENCES account (id),
 	FOREIGN KEY (cid) REFERENCES customer(id)) ENGINE=InnoDB;
@@ -129,7 +129,7 @@ CREATE TABLE transactions(cid CHAR(8),
 	aid CHAR(8),
 	atm_id CHAR(8),
 	amount INTEGER,
-	date DATE,
+	date DATETIME,
 	type CHAR(8),
 	CHECK (type IN ('deposit', 'withdraw')),
 	PRIMARY KEY (cid, aid, atm_id),
@@ -138,7 +138,7 @@ CREATE TABLE transactions(cid CHAR(8),
 	FOREIGN KEY (atm_id) REFERENCES atm(atm_id)) ENGINE=InnoDB;
 	
 CREATE TABLE loan_payments(loan_id CHAR(8),
-	date DATE,
+	date DATETIME,
 	amount INTEGER,
 	cid CHAR(8),
 	PRIMARY KEY(loan_id, date),
@@ -148,7 +148,6 @@ CREATE TABLE loan_payments(loan_id CHAR(8),
 CREATE TABLE works_at (id CHAR(8) PRIMARY KEY,
 	bank_id CHAR(8),
 	bname CHAR(12),
-	name VARCHAR(12),
 	FOREIGN KEY (id) REFERENCES staff(id),
 	FOREIGN KEY (bank_id, bname) REFERENCES branch(bank_id, name)) ENGINE=InnoDB;
 	
@@ -193,8 +192,20 @@ CREATE TABLE borrowing(loan_id CHAR(8),
 	FOREIGN KEY (cid) REFERENCES customer(id),
 	FOREIGN KEY (branch_name, bank_id) REFERENCES branch(name,bank_id)) ENGINE=InnoDB;
 	
-CREATE TABLE credit_cards(customer_number CHAR(12),
-	cid CHAR(8),
-	PRIMARY KEY(customer_number),
-	FOREIGN KEY (customer_number) REFERENCES credit_card(card_number),
-	FOREIGN KEY (cid) REFERENCES customer(id)) ENGINE=InnoDB;
+CREATE TABLE credit_cards(cust_id CHAR(8),
+	card_number CHAR(16),
+	PRIMARY KEY(card_number),
+	FOREIGN KEY (card_number) REFERENCES credit_card(card_number),
+	FOREIGN KEY (cust_id) REFERENCES customer(id)) ENGINE=InnoDB;
+
+
+
+INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('root', 'Afsg', 'Sad', 'ankara', '2014-05-13');
+INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
+INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
+
+

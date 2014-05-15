@@ -7,6 +7,8 @@ class CustomerHome extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('user','',TRUE);
+        $this->load->model('bank','',TRUE);
+        $this->load->model('account','',TRUE);
     }
     
     public function index()
@@ -17,13 +19,16 @@ class CustomerHome extends CI_Controller {
             
             $uid=$session_data['username'];
             $customer=$this->user->isCustomer($uid);
-            
+            if(!$customer){
+                echo"yuo not custmoer";
+                return;
+            }
             $data['username'] = $session_data['username'];
-            $data['title'] = "The Bank of Isengard";
+            $data['title'] = $this->bank->get()[0]->name;
             $data['customer'] = $customer;
             $data['showlogout']=true;
             $this->load->view('templates/header',$data);
-            $this->load->view('pages/customerHome');
+            $this->load->view('pages/customerHome',$data);
             $this->load->view('templates/footer',$data);
         }
         else
@@ -41,8 +46,9 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/account');
+        $uid=$data['username'] = $session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/account',$data);
     }
     
     
@@ -54,8 +60,9 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/bills');
+        $uid=$data['username'] = $session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/bills',$data);
     }
     
     
@@ -78,8 +85,9 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/transfer');
+        $uid=$data['username'] = $session_data['username'];
+        $data['accounts'] = $this->account->getCustomerAccounts($uid);
+        $this->load->view('pages/customer/transfer',$data);
     }
     
     

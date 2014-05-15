@@ -14,15 +14,21 @@ if ($customer==false){
     p.addClass('selected');
     $("#sub_page").load("customerHome/"+page);
   }
+  $(document).ready(function (){
+    var hash = window.location.hash;
+    if(hash==="")
+      hash="#home"
+    $(""+hash).click();
+  });
 </script>
 
 <div class="frame">
   <ul class="tabbar">
-    <li><a class="tab-button" onclick="openPage(this,'account')">Home</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'bills')">Pay Bills</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'requests')">Requests</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'transfer')">Money Transfer</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'updateinfo')">Update Info</a></li>
+    <li id="home" class="tab-button" onclick="openPage(this,'account')"><a >Home</a></li>
+    <li id="bills" class="tab-button" onclick="openPage(this,'bills')"><a>Pay Bills</a></li>
+    <li id="rquests"  class="tab-button" onclick="openPage(this,'requests')"><a>Requests</a></li>
+    <li id="transfer" class="tab-button" onclick="openPage(this,'transfer')"><a>Money Transfer</a></li>
+    <li id="updateinfo" class="tab-button" onclick="openPage(this,'updateinfo')"><a>Update Info</a></li>
   </ul>
 
   <div id="sub_page">
