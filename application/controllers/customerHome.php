@@ -100,7 +100,13 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/userinfo');
+        $uid=$data['username'] = $session_data['username'];
+        
+        $result = $this->user->getUserInfo($uid)[0];
+        $data['fname']=$result->name_first;
+        $data['lname']=$result->name_last;
+        $data['address']=$result->address;
+        $data['bdate']=explode(" ",$result->birthdate)[0];
+        $this->load->view('pages/customer/userinfo',$data);
     }
 }
