@@ -1,9 +1,18 @@
 <?php
 Class staff extends CI_Model
 {
- function add($id,$salary,$name,$surname, $phone_number,$address )
+ function add($id,$salary,$name,$surname, $phone_number,$address,$password, $bank_id, $branch_name )
  {
-  $row = array (
+	//for insert to user table
+	$row = array (
+      'username' => $id,
+	  'password' => $password
+    );
+	
+	$this->db->insert('user', $row);
+	
+	//then insert to staff table
+	$row = array (
       'id' => $id,
       'salary' => $salary,
 	  'name' => $name,
@@ -11,7 +20,17 @@ Class staff extends CI_Model
 	  'phone_number' => $phone_number,
 	  'address' => $address
     );
+
    $this -> db -> insert('staff', $row);
+   
+   //insert works_at relation
+   $row = array (
+      'id' => $id,
+      'bank_id' =>$bank_id,
+	  'bname' => $branch_name
+    );
+
+   $this -> db -> insert('works_at', $row);
 
  }
  
@@ -29,7 +48,11 @@ Class staff extends CI_Model
  }
  function fireEmployee($id){
 	$this->db->delete('works_at', array('id' => $id));
+	$this->db->delete('manager', array('id' => $id));
+	$this->db->delete('clerk', array('id' => $id));
+	$this->db->delete('customer_assistant', array('id' => $id));
 	$this->db->delete('staff', array('id' => $id));
+	
  }
  function updateSalary($id, $salary){
 	$sql="update staff set salary ='$salary' where id='$id'";
@@ -50,7 +73,7 @@ Class staff extends CI_Model
     );
    $this -> db -> insert('clerk', $row);
  }
-  function addAssistant($id,){
+  function addAssistant($id){
 	$row = array (
       'id' => $id
 	

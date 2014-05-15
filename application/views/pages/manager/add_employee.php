@@ -1,4 +1,4 @@
-<div class="container">Welcome<br>
+<div class="container"><br>
 <script>
   function openPage(e,page) {
     p = $(e).parent();
@@ -13,7 +13,7 @@
 
 <div class="frame">
 <h2> Addition of New Employee</h2>
-   <form method="post" action="managerHome/addEmployee">
+   <form method="post" action="managerHome/add_Employee">
 		<p> Branch Name 
 			<select name="employee_type">
 				<option value="new_manager">Manager</option>
@@ -23,14 +23,29 @@
           
 		</p>
 		<p> Admin ("use for only manager employees") 
-			<select name="employee_type">
+			<select name="is_admin">
 				<option value="admin">Admin</option>
 				<option value="not_admin">Not an admin</option>
 				
 			</select><br>
           
 		</p>
+		<p> Which branch employ this new employee?
+			<select name="branch_name">
+			<?php
+				//print_r($branch_list);
+				if($branch_list){
+					foreach($branch_list as $row) {
+						echo '<option value="'.$row->name.'">'.$row->name.'</option>';
+					
+						}
+		
+				}	
+			?>
+		</select>
+		</p>
 		<p> Title ("use for only clerk employees") <input type="text" name="title" /> </p>
+		<p> Password for website <input type="text" name="password" /> </p>
 		<p> Name <input type="text" name="name" /> </p>
 		<p> Surname <input type="text" name="surname" /> </p>
 		<p> Salary <input type="text" name="salary" /> </p>
