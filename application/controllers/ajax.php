@@ -6,7 +6,7 @@ class Ajax extends CI_Controller {
     {
         parent::__construct();
         //$this->load->model('bill','',TRUE);
-        //$this->load->model('bank','',TRUE);
+        $this->load->model('loan','',TRUE);
         $this->load->model('account','',TRUE);
     }
     
@@ -15,6 +15,9 @@ class Ajax extends CI_Controller {
        
         
 	}
+    public function calculateLoan($amount){
+        echo $this->loan->calculate($amount);
+    }
     
     public function listAccounts( ) {
         $session_data = $this->session->userdata('logged_in');

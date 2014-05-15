@@ -50,7 +50,7 @@ Class staff extends CI_Model
     );
    $this -> db -> insert('clerk', $row);
  }
-  function addAssistant($id,){
+  function addAssistant($id){
 	$row = array (
       'id' => $id
 	

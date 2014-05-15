@@ -45,6 +45,7 @@ CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE loan(loan_id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
+	amount INTEGER,
 	date_given DATETIME,
 	date_due DATETIME,
 	is_approved BOOLEAN);

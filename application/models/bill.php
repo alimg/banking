@@ -73,5 +73,4 @@ Class Bill extends CI_Model
     }
  
 }
-?>
  
