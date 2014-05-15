@@ -4,7 +4,7 @@
 		<p> Branch Name 
 			<select name="branch_name">
 			<?php
-				print_r($branch_list);
+				//print_r($branch_list);
 				if($branch_list){
 					foreach($branch_list as $row) {
 						echo '<option value="'.$row->name.'">'.$row->name.'</option>';
