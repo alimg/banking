@@ -1,11 +1,5 @@
-<div class="container">Welcome<br>
+<br>
 <script>
-  function openPage(e,page) {
-    p = $(e).parent();
-    p.parent().children().removeClass('selected');
-    p.addClass('selected');
-    $("#sub_page").load("managerHome/"+page);
-  }
   function deleteAtm(atm_id){
 	$.ajax({ url: "managerHome/deleteAtm/"+atm_id})
                 .done(function(data) {
@@ -59,8 +53,4 @@
 </table>
     
 
-  <div id="sub_page">
-    ..
-  </div>
-</div>
 </div>

@@ -1,20 +1,9 @@
-<div class="container"><br>
-<script>
-  function openPage(e,page) {
-    p = $(e).parent();
-    p.parent().children().removeClass('selected');
-    p.addClass('selected');
-    $("#sub_page").load("managerHome/"+page);
-  }
- 
-</script>
-
-
+<br>
 
 <div class="frame">
 <h2> Addition of New Employee</h2>
    <form method="post" action="managerHome/add_Employee">
-		<p> Branch Name 
+		<p>Employment type 
 			<select name="employee_type">
 				<option value="new_manager">Manager</option>
 				<option value="new_clerk">Clerk</option>
@@ -55,10 +44,6 @@
 		<br />
 	</form>
 
-    
 
-  <div id="sub_page">
-    ..
-  </div>
 </div>
 </div>

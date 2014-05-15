@@ -123,49 +123,48 @@ class managerHome extends CI_Controller {
 	}
 	public function addAtm(){
 		if($this->session->userdata('logged_in'))
-			{
-			   $session_data = $this->session->userdata('logged_in');
-				
-				$uid=$session_data['username'];
-				$manager=$this->manager->isManager($uid);
-				
-				$data['username'] = $session_data['username'];
-				$data['title'] = $this->bank->get()[0]->name;
-				$data['manager'] = $manager;
-				$data['showlogout']=true;
-				
-				$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
-				$data['atm_list'] = $this->atm->getAtmList($this->bank->get()[0]->bank_id);
-			   
-				//$this->load->view('pages/manager/atm_management', $data);
-				if (isset($_POST['submit'])){
-				
-					if (!(empty($_POST['branch_name'])) && !(empty($_POST['balance']) )&&  !(empty($_POST['address']) )){
-						$branch_name = $_POST['branch_name'];
-						$balance = $_POST['balance'];
-						$address = $_POST['address'];
-						$id = $this->unique_id();
-						$this->atm->add($id,$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
-						
+        {
+            $session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+            
+            $data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
+            $data['atm_list'] = $this->atm->getAtmList($this->bank->get()[0]->bank_id);
+           
+            //$this->load->view('pages/manager/atm_management', $data);
+            if (isset($_POST['submit'])){
+            
+                if (!(empty($_POST['branch_name'])) && !(empty($_POST['balance']) )&&  !(empty($_POST['address']) )){
+                    $branch_name = $_POST['branch_name'];
+                    $balance = $_POST['balance'];
+                    $address = $_POST['address'];
+                    $id = $this->unique_id();
+                    $this->atm->add($id,$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
+                    
 
-					}
-					
-					else{
-						echo "<script>
-						alert('Please enter fill all text fields!');
-						</script>";
-					}
-					
-				}
-				redirect('managerHome#addAtm', 'refresh');
-				 
-				
-			}
-			else
-			{
-				//If no session, redirect to login page
-				redirect('login', 'refresh');
-			}
+                }
+                else{
+                    echo "<script>
+                    alert('Please enter fill all text fields!');
+                    </script>";
+                }
+                
+            }
+            redirect('managerHome#home', 'refresh');
+             
+            
+        }
+        else
+        {
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+        }
 	
 	
 	}
@@ -212,9 +211,9 @@ class managerHome extends CI_Controller {
             $data['showlogout']=true;
 			
 			$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
-			echo "enter";
+			//echo "enter";
 			$data['employment_list'] = $this->staff->fireEmployee($id);
-			echo "exit";
+			//echo "exit";
             $this->load->view('pages/manager/employment_management', $data);
             
 		}
@@ -256,7 +255,7 @@ class managerHome extends CI_Controller {
 				}
 				
 			
-			redirect('managerHome#addAtm', 'refresh');
+			redirect('managerHome#empMan', 'refresh');
 			 
             
 		}
@@ -316,7 +315,7 @@ class managerHome extends CI_Controller {
 						}
 						
 						
-						redirect('managerHome#home', 'refresh');
+						redirect('managerHome#empMan', 'refresh');
 						
 					
 					}

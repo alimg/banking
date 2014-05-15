@@ -9,20 +9,27 @@ if ($manager==false){
 
 <script>
   function openPage(e,page) {
-    p = $(e).parent();
+    p = $(e);
     p.parent().children().removeClass('selected');
     p.addClass('selected');
     $("#sub_page").load("managerHome/"+page);
+    
   }
+  $(document).ready(function (){
+    var hash = window.location.hash;
+    if(hash==="")
+      hash="#home"
+    $(""+hash).click();
+  });
 </script>
 
 <div class="frame">
 	<ul class="tabbar">
-    <li><a class="tab-button" onclick="openPage(this,'man_home')">Home</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'atm_management')">Atm Management</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'employment_management')">Employment Management</a></li>
-    <li><a class="tab-button" onclick="openPage(this,'reports')">Reports</a></li>
-	<li><a class="tab-button" onclick="openPage(this,'manager_update_info')">Update Info</a></li>
+    <li id="home" class="tab-button" onclick="openPage(this,'man_home')"><a>Home</a></li>
+    <li id="atmMan" class="tab-button" onclick="openPage(this,'atm_management')"><a>Atm Management</a></li>
+    <li id="empMan" class="tab-button" onclick="openPage(this,'employment_management')"><a>Employment Management</a></li>
+    <li id="reports" class="tab-button" onclick="openPage(this,'reports')"><a>Reports</a></li>
+    <li id="updateinfo" class="tab-button" onclick="openPage(this,'manager_update_info')"><a>Update Info</a></li>
   </ul>
 
   <div id="sub_page">

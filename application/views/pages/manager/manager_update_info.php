@@ -1,13 +1,4 @@
-<div class="container"><br>
-<script>
-  function openPage(e,page) {
-    p = $(e).parent();
-    p.parent().children().removeClass('selected');
-    p.addClass('selected');
-    $("#sub_page").load("managerHome/"+page);
-  }
- 
-</script>
+<br>
 
 
 
@@ -25,9 +16,4 @@
 	</form>
 
     
-
-  <div id="sub_page">
-    ..
-  </div>
-</div>
 </div>
