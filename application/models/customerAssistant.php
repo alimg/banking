@@ -53,7 +53,7 @@ Class customerAssistant extends CI_Model
 	if(!empty($alert))
 		echo "<script>alert('" . $alert . "');</script>";
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
 	
  function addCustomer($firstName, $lastName, $address, $birth, $bName, $pass)
@@ -88,7 +88,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -100,7 +100,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addCorp($cName, $iban)
@@ -115,7 +115,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('corporation', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addBusinessAcc($cid, $bName, $iban){
@@ -130,7 +130,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -149,7 +149,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addSavingsAcc($cid, $bName, $iban, $dateEnd){
@@ -165,7 +165,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -173,7 +173,7 @@ Class customerAssistant extends CI_Model
 	$row = array (
 		'id' => $aid,
 		'interest_rate' => $tid,
-		'date_start' => date("Y-m-d"),
+		'date_start' => date("y-m-d"),
 		'date_end' => $dateEnd
 	);
 	
@@ -186,7 +186,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addStandardAcc($cid, $bName, $iban){
@@ -201,7 +201,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -213,7 +213,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  function searchCard($criteria){
 	
@@ -224,7 +224,7 @@ Class customerAssistant extends CI_Model
 	$query = $this->db->query('SELECT * FROM card NATURAL JOIN credit_cards NATURAL JOIN customer' .
 		' WHERE (name_first LIKE \'' . $name_first->result()[0]->name_first . 
 		'\' OR name_last LIKE \'' . $name_last->result()[0]->name_last . 
-		'\') AND is_approved = FALSE AND credit_cards.customer_number=card.card_number');
+		'\') AND is_approved = FALSE AND credit_cards.card_number=card.card_number');
 	
 	$table = '';
 	
