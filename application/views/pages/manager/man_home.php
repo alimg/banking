@@ -49,7 +49,7 @@
 			<td>$row->branch_name</td>
 			<td>$row->address</td>
 			<td>$row->balance</td>
-			<td><button onclick=\"deleteAtm($row->atm_id)\" >Delete Atm</button> </td>
+			<td><button onclick=\"deleteAtm('$row->atm_id')\" >Delete Atm</button> </td>
 		</tr>";
 		}
 		

@@ -144,8 +144,9 @@ class managerHome extends CI_Controller {
 						$branch_name = $_POST['branch_name'];
 						$balance = $_POST['balance'];
 						$address = $_POST['address'];
-						$this->atm->add("789",$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
-					
+						$id = $this->unique_id();
+						$this->atm->add($id,$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
+						
 					}
 					
 					else{
