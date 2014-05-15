@@ -40,6 +40,21 @@ Class Branch extends CI_Model
 
  }
  
+ function addBranch($name,$bank,$address,$balance){
+   $row=array(
+      'bank_id'=>$bank,
+      'name' =>$name,
+      'address'=>$address,
+      'balance'=>$balance);
+   $this->db->insert('branch',$row);
+ }
+ 
+ function deleteBranch($name,$bank){
+   $this->db->where('name',$name);
+   $this->db->where('bank_id',$bank);
+   $this->db->delete('branch');
+ }
+ 
 }
 ?>
  

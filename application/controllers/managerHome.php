@@ -22,6 +22,10 @@ class managerHome extends CI_Controller {
             
             $uid=$session_data['username'];
             $manager=$this->manager->isManager($uid);
+            if(!$manager){
+                echo "You are not manager";
+                return;
+            }
             
             $data['username'] = $session_data['username'];
             $data['title'] = $this->bank->get()[0]->name;
@@ -39,9 +43,7 @@ class managerHome extends CI_Controller {
             //If no session, redirect to login page
             redirect('login', 'refresh');
 		}
-		
-		
-}
+    }
 	public function man_home(){
 		 if($this->session->userdata('logged_in'))
         {
@@ -405,7 +407,68 @@ class managerHome extends CI_Controller {
 	}
 	
 	
+	public function branch_management(){
+		 if($this->session->userdata('logged_in'))
+        {
+		   $session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            if(!$manager[0]->admin){
+                return;
+            }
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+			
+			$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
+           
+            $this->load->view('pages/manager/branches', $data);
+            
+		}
+		else
+		{
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+		}
 	
+	}
+    
+    public function addBranch(){
+        if($this->session->userdata('logged_in'))
+        {
+		   $session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            if(!$manager[0]->admin){
+                return;
+            }
+            $bank=$this->bank->get()[0]->bank_id;
+            $name=$_POST['name'];
+            $address=$_POST['address'];
+            $balance=$_POST['balance'];
+            $this->branch->addBranch($name,$bank,$address,$balance);
+            redirect('managerHome#branches','refresh');
+        }
+    }
+	
+    public function deleteBranch($bname){
+        if($this->session->userdata('logged_in'))
+        {
+		   $session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            if(!$manager[0]->admin){
+                return;
+            }
+            $bank=$this->bank->get()[0]->bank_id;
+            $this->branch->deleteBranch($bname,$bank);
+            redirect('managerHome#branches','refresh');
+        }
+    }
 	function unique_id($l = 8) {
     return substr(md5(uniqid(mt_rand(), true)), 0, $l);
 	}

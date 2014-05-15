@@ -30,6 +30,9 @@ if ($manager==false){
     <li id="empMan" class="tab-button" onclick="openPage(this,'employment_management')"><a>Employment Management</a></li>
     <li id="reports" class="tab-button" onclick="openPage(this,'reports')"><a>Reports</a></li>
     <li id="updateinfo" class="tab-button" onclick="openPage(this,'manager_update_info')"><a>Update Info</a></li>
+    <?php if($manager[0]->admin){?>
+    <li id="branches" class="tab-button" onclick="openPage(this,'branch_management')"><a>Branch Management</a></li>
+    <?php  }?>
   </ul>
 
   <div id="sub_page">
