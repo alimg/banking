@@ -45,6 +45,7 @@ CREATE TABLE business_account (id CHAR(8) PRIMARY KEY,
 
 CREATE TABLE loan(loan_id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
+	amount INTEGER,
 	date_given DATETIME,
 	date_due DATETIME,
 	is_approved BOOLEAN);
@@ -198,6 +199,44 @@ CREATE TABLE credit_cards(cust_id CHAR(8),
 	FOREIGN KEY (card_number) REFERENCES credit_card(card_number),
 	FOREIGN KEY (cust_id) REFERENCES customer(id)) ENGINE=InnoDB;
 
+/*1) BusinessCustomer View*/
+CREATE VIEW business_customer AS
+        SELECT C.* FROM customer C, customer_accounts R, business_account B
+        WHERE C.id=R.cid and R.aid=B.id;
+
+
+/*2) View Accounts of the Same Branch with Stuff*/
+/*
+CREATE VIEW branch_accounts AS
+        SELECT * FROM account NATURAL JOIN
+        (SELECT id, 'Business Account' as type FROM business_account
+        UNION
+        SELECT id, 'Saving Account' as type FROM saving_account)
+        WHERE bank_id=@bank_id and branch_name=@bname;*/
+/*
+CREATE TRIGGER ATM_out_of_money
+        AFTER UPDATE OF balance ON (atm)
+REFERENCING NEW ROW AS nrow
+REFERENCING OLD ROW AS orow
+WHEN nrow.balance < 0 AND orow.balance IS NOT NULL
+BEGIN ATOMIC
+        UPDATE transactions T
+        SET (
+                SELECT amount FROM T
+                WHERE T.aid = orow.atm_id
+                ).amount = orow.balance
+        SET nrow.balance = 0;
+END;
+
+CREATE TRIGGER acc_money 
+        AFTER UPDATE OF balance ON (account)
+REFERENCING NEW ROW AS nrow
+REFERENCING OLD ROW AS orow
+WHEN nrow.balance < 0 AND orow.balance IS NOT NULL
+BEGIN
+        ROLLBACK
+END;
+*/
 
 
 INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
@@ -217,6 +256,7 @@ INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`)
 INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
 
 INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
+
 INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('Istanbul', '1', 'Ataşehir', '60000');
 
 INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('15048', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
@@ -266,5 +306,3 @@ INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('4321432
 INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '19807', '32588', '19791');
 INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '24699', '32588', '19791');
 INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '5652', '32588', '19791');
-
-

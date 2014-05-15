@@ -9,6 +9,7 @@ class CustomerHome extends CI_Controller {
         $this->load->model('user','',TRUE);
         $this->load->model('bank','',TRUE);
         $this->load->model('account','',TRUE);
+        $this->load->model('branch','',TRUE);
     }
     
     public function index()
@@ -74,7 +75,8 @@ class CustomerHome extends CI_Controller {
         }
         $session_data = $this->session->userdata('logged_in');
         $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/requests');
+        $data['branches'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
+        $this->load->view('pages/customer/requests',$data);
     }
     
     
@@ -98,7 +100,13 @@ class CustomerHome extends CI_Controller {
             return;
         }
         $session_data = $this->session->userdata('logged_in');
-        $data['username'] = $session_data['username'];
-        $this->load->view('pages/customer/userinfo');
+        $uid=$data['username'] = $session_data['username'];
+        
+        $result = $this->user->getUserInfo($uid)[0];
+        $data['fname']=$result->name_first;
+        $data['lname']=$result->name_last;
+        $data['address']=$result->address;
+        $data['bdate']=explode(" ",$result->birthdate)[0];
+        $this->load->view('pages/customer/userinfo',$data);
     }
 }

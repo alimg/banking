@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Card extends CI_Controller {
+class Card extends CI_Model {
 
   function unique_id($l = 8) {
     return substr(md5(uniqid(mt_rand(), true)), 0, $l);

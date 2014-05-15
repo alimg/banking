@@ -144,8 +144,10 @@ class managerHome extends CI_Controller {
 						$branch_name = $_POST['branch_name'];
 						$balance = $_POST['balance'];
 						$address = $_POST['address'];
-						$this->atm->add("789",$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
-					
+						$id = $this->unique_id();
+						$this->atm->add($id,$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
+						
+
 					}
 					
 					else{
@@ -265,7 +267,7 @@ class managerHome extends CI_Controller {
 		}
 	
 	}
-	public function add_employee(){
+	public function add_Employee(){
 		if($this->session->userdata('logged_in'))
 			{
 			   $session_data = $this->session->userdata('logged_in');
@@ -277,6 +279,7 @@ class managerHome extends CI_Controller {
 				$data['title'] = $this->bank->get()[0]->name;
 				$data['manager'] = $manager;
 				$data['showlogout']=true;
+				$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
 				$this->load->view('pages/manager/add_employee', $data);
 				if (isset($_POST['submit'])){
 				
@@ -286,16 +289,34 @@ class managerHome extends CI_Controller {
 						$surname = $_POST['surname'];
 						$phone_number = $_POST['phone_number'];
 						$address = $_POST['address'];
+						$password = $_POST['password'];
+						$branch_name = $_POST['branch_name'];
 						$id = $this->unique_id();
-						$this->staff->add($id,$salary,$name,$surname, $phone_number,$address );
+						$this->staff->add($id,$salary,$name,$surname, $phone_number,$address, $password, $this->bank->get()[0]->bank_id, $branch_name );
+						$is_admin = $_POST['is_admin'];
+						$type = $_POST['employee_type'];
+						//echo "typeee  $type";
+						//echo "is admin : $is_admin";
+		
+						if($type == "new_manager"){
+							/*if($is_admin == "admin"){
+								$admin = 1;
+							}else if ($is_admin == "not_admin"){
+								$admin = 0;
+							}*/
+							$admin = 0;
+							$this->staff->addManager($id,$admin);
+						}
+						if($type =="new_clerk" ){
+							$title = $_POST['title'];
+							$this->staff->addClerk($id,$title);
+						}
+						if($type == "new_assistant"){
+							$this->staff->addAssistant($id);
+						}
 						
-						if(new_manager == true){
 						
-						}
-						if(new_clerk ==true ){
-						}
-						if(new_assistant == true){
-						}
+						redirect('managerHome#home', 'refresh');
 						
 					
 					}
@@ -318,6 +339,74 @@ class managerHome extends CI_Controller {
 			}
 	
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////reports
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function reports(){
+		if($this->session->userdata('logged_in'))
+        {
+			$session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+			
+			
+            $this->load->view('pages/manager/reports');
+            
+		}
+		else
+		{
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+		}
+	
+	}
+	public function manager_update_info(){
+		if($this->session->userdata('logged_in'))
+        {
+			$session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+            $this->load->view('pages/manager/manager_update_info');
+			if (isset($_POST['submit'])){
+			
+				$salary = $_POST['salary'];
+				$name = $_POST['name'];
+				$surname = $_POST['surname'];
+				$phone_number = $_POST['phone_number'];
+				$address = $_POST['address'];
+				$password = $_POST['password'];
+				
+				$this->staff->updateInfo($uid,$salary,$name,$surname, $phone_number,$address, $password);
+				redirect('managerHome#home', 'refresh');
+			}
+				
+
+				
+							
+		}
+		else
+		{
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+		}
+	
+	}
+	
+	
+	
 	function unique_id($l = 8) {
     return substr(md5(uniqid(mt_rand(), true)), 0, $l);
 	}

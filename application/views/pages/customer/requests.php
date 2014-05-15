@@ -1,10 +1,18 @@
 
 <h1 class="toggler">Request Loan</h1>
 <div>
-    <form id="loan" action="request/loan" method="post">
-    Amount: <input type="text" name="amount"/><br>
-    Due date: <input type="text" name="ddate"/><br>
-    Interest Rate: <input type="text" name="fname" value="0.04"/><br>
+    <form id="loan" action="request/loanRequest" method="post">
+    Amount: <input id="loanamount" type="text" name="amount"/><br>
+    Selected Due date: <input  id="datePicker" type="text" name="ddate" /><br>
+    Interest Rate: <input id="interestrate" type="text" name="fname" value="-" disabled/><br>
+    <select name="branch">
+        <?php
+        if($branches)
+            foreach($branches as $row){
+                echo "<option value='{$row->name}'>{$row->name}</option>";
+            }
+        ?>
+    </select>
     <input type="submit" value="Apply for loan"/>
     </form>
 </div>
@@ -22,10 +30,31 @@
     <input type="submit">
     </form>
 </div>
-
 <script>
-$(".toggler").next().hide();
-$(".toggler").click(function(){
-        $(this).next().toggle();
+    $("#datePicker").datepicker({dateFormat:"yy-dd-mm"});
+    //$('#ui-datepicker-div').css('clip', 'auto');
+    //$('#ui-datepicker-div').removeClass('ui-helper-hidden-accessible'); 
+    
+    
+    $(".toggler").next().hide();
+    $(".toggler").click(function(){
+            $(this).next().toggle();
+        });
+        
+    var loanAmount=0;
+    $('#loanamount').keyup(function () { 
+        loanAmount = parseInt( $('#loanamount').val() );
+        if(isNaN(loanAmount))
+            return;
+        $.ajax({ url: "ajax/calculateLoan/"+loanAmount })
+            .done(function(data) {
+              var obj = parseFloat(data.trim());
+              if(isNaN(obj)){
+                  loanAmount=0;
+                  $("#interestrate").val("-");
+              }else {
+                  $("#interestrate").val(""+obj);
+              }
+            });
     });
 </script>

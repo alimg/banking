@@ -7,7 +7,7 @@ class CustomerAssistantHome extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('user','',TRUE);
-        $this->load->model('customerAssistant','',TRUE);
+        $this->load->model('customerassistant','',TRUE);
     }
     
     public function index()

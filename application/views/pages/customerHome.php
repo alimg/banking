@@ -9,7 +9,7 @@ if ($customer==false){
 
 <script>
   function openPage(e,page) {
-    p = $(e).parent();
+    p = $(e);
     p.parent().children().removeClass('selected');
     p.addClass('selected');
     $("#sub_page").load("customerHome/"+page);

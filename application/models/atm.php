@@ -8,7 +8,9 @@ Class atm extends CI_Model
       'address' => $address,
       'balance' => $balance
     );
+	echo "<script> alert(" .$balance . "); </script>";
    $this -> db -> insert('atm', $row);
+ 
 	 $row = array (
       'atm_id' => $atm_id,
       'branch_name' => $branch_name,
