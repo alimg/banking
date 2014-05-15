@@ -1,4 +1,3 @@
-<div id="sub_page">
    <h2> Addition of New ATM</h2>
    <form method="post" action="managerHome/addAtm">
 		<p> Branch Name 
@@ -20,5 +19,4 @@
 		<input type="submit" value="submit" name="submit" />
 		<br />
 	</form>
-
-  </div>  
+ 

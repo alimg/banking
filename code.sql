@@ -240,14 +240,69 @@ END;
 
 
 INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
+INSERT INTO `user` (`username`, `password`) VALUES ('111', '111');
+INSERT INTO `user` (`username`, `password`) VALUES ('1234', '1234');
+INSERT INTO `user` (`username`, `password`) VALUES ('16658', '798678934tere');
+INSERT INTO `user` (`username`, `password`) VALUES ('16758', '7986789');
+INSERT INTO `user` (`username`, `password`) VALUES ('18726', '54321');
+INSERT INTO `user` (`username`, `password`) VALUES ('32588', '54321');
+
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('111', 'dsa', 'qwe', 'weasdqwe', '2014-01-05');
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('16758', 'Osman', 'Hakan John', 'wefsdrwety', '2014-05-05');
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('18726', 'Osman', 'asd', '09opp*0', '2014-05-22');
+INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('32588', 'Hakan', 'Can', 'Mellbourne', '2014-05-05');
 INSERT INTO `customer` (`id`, `name_first`, `name_last`, `address`, `birthdate`) VALUES ('root', 'Afsg', 'Sad', 'ankara', '2014-05-13');
+
 INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
+
 INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
-INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
-INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
-INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4004', '78', '2014-05-23');
-INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4006', '52', '2014-05-30');
-INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4007', '64', '2014-05-30');
-INSERT INTO `corporation` (`company_id`, `name`, `account_IBAN`) VALUES ('1001', 'ASKI', '1234123412341234');
-INSERT INTO `bill_target` (`bill_id`, `company_id`) VALUES ('4004', '1001');
-INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('rand1233', '1', 'bilkent', '1234123412341234', '0', 'tl', '2014-05-14 00:00:00');
+
+INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('Istanbul', '1', 'Ataşehir', '60000');
+
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('15048', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('19791', '1', 'bilkent', '4325234523', '0', 'tl', '2014-05-14');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('21157', '1', 'bilkent', '43211234', '0', 'tl', '2014-05-14');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('26983', '1', 'bilkent', '94325234523', '0', 'tl', '2014-05-14');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('2965', '1', 'bilkent', '1194', '0', 'tl', '2014-05-14');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('5959', '1', 'bilkent', '57567867', '0', 'tl', '2014-05-14');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('887', '1', 'bilkent', '27620', '0', 'tl', '2014-05-14');
+
+INSERT INTO `business_account` (`id`, `tax_id`) VALUES ('19791', '11484');
+
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('32588', '19791');
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('18726', '26983');
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('32588', '5959');
+INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('16758', '887');
+
+INSERT INTO `saving_account` (`id`, `interest_rate`, `date_start`, `date_end`) VALUES ('5959', '15220', '2014-05-14', '2014-05-22');
+
+INSERT INTO `card` (`card_number`, `valid_until`, `is_approved`, `PIN`) VALUES ('43214321', '2014-05-24', '0', '3333');
+INSERT INTO `card` (`card_number`, `valid_until`, `is_approved`, `PIN`) VALUES ('534535', '2014-05-06', '0', '1523');
+
+INSERT INTO `loan` (`loan_id`, `interest_rate`, `date_given`, `date_due`, `is_approved`) VALUES ('153', '12', '2014-05-01', '2014-05-22', '0');
+INSERT INTO `loan` (`loan_id`, `interest_rate`, `date_given`, `date_due`, `is_approved`) VALUES ('657', '657897', '2014-05-03', '2014-05-12', '0');
+
+INSERT INTO `borrowing` (`loan_id`, `branch_name`, `bank_id`, `cid`) VALUES ('153', 'Istanbul', '1', '32588');
+INSERT INTO `borrowing` (`loan_id`, `branch_name`, `bank_id`, `cid`) VALUES ('657', 'Istanbul', '1', '32588');
+
+INSERT INTO `credit_card` (`card_number`, `limit_of_card`, `statement_date`) VALUES ('43214321', '123', '8');
+INSERT INTO `credit_card` (`card_number`, `limit_of_card`, `statement_date`) VALUES ('534535', '5235', '8');
+
+INSERT INTO `credit_cards` (`cust_id`, `card_number`) VALUES ('32588', '43214321');
+INSERT INTO `credit_cards` (`cust_id`, `card_number`) VALUES ('32588', '534535');
+
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
+
+INSERT INTO `staff` (`id`, `salary`, `name`, `surname`, `phone_number`, `address`) VALUES ('1234', '11111', 'Hakan', 'Osman2', '9999999', 'Birmingham');
+
+INSERT INTO `customer_assistant` (`id`) VALUES ('1234');
+	
+INSERT INTO `installment` (`id`, `total_amount`) VALUES ('2382', '10000');
+INSERT INTO `installment` (`id`, `total_amount`) VALUES ('19807', '10000');
+INSERT INTO `installment` (`id`, `total_amount`) VALUES ('24699', '10000');
+INSERT INTO `installment` (`id`, `total_amount`) VALUES ('5652', '10000');
+
+INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('43214321', '2382', '32588', '19791');
+INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '19807', '32588', '19791');
+INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '24699', '32588', '19791');
+INSERT INTO `payment` (`card_number`, `ins_id`, `c_id`, `a_id`) VALUES ('534535', '5652', '32588', '19791');

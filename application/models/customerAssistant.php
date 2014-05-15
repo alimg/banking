@@ -53,7 +53,7 @@ Class customerAssistant extends CI_Model
 	if(!empty($alert))
 		echo "<script>alert('" . $alert . "');</script>";
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
 	
  function addCustomer($firstName, $lastName, $address, $birth, $bName, $pass)
@@ -88,7 +88,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -100,7 +100,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addCorp($cName, $iban)
@@ -115,7 +115,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('corporation', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addBusinessAcc($cid, $bName, $iban){
@@ -130,7 +130,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -149,7 +149,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addSavingsAcc($cid, $bName, $iban, $dateEnd){
@@ -165,7 +165,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -173,7 +173,7 @@ Class customerAssistant extends CI_Model
 	$row = array (
 		'id' => $aid,
 		'interest_rate' => $tid,
-		'date_start' => date("Y-m-d"),
+		'date_start' => date("y-m-d"),
 		'date_end' => $dateEnd
 	);
 	
@@ -186,7 +186,7 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
  
  function addStandardAcc($cid, $bName, $iban){
@@ -201,7 +201,7 @@ Class customerAssistant extends CI_Model
 		'IBAN' => $iban,
 		'balance' => 0,
 		'currency' => 'TL',
-		'dateCreated' => date("Y-m-d")
+		'dateCreated' => date("y-m-d")
 	);
 	
 	$this->db->insert('account', $row);
@@ -213,29 +213,29 @@ Class customerAssistant extends CI_Model
 	
 	$this->db->insert('customer_accounts', $row);
 	
-	redirect('CustomerAssistantHome', 'refresh');
+	redirect('customerAssistantHome', 'refresh');
  }
- function searchCard($criteria){
+ function searchCard($name_first, $name_last){
+	$query = $this->db->query('SELECT id FROM customer' . 
+		' WHERE name_first LIKE \'' . $name_first . 
+		'\' AND name_last LIKE \'' . $name_last . 
+		'\'');
+	$cust_id = $query->result()[0]->id;
 	
-	$name_first = $this->db->query('SELECT name_first FROM customer WHERE id = ' . $criteria);
-	
-	$name_last = $this->db->query('SELECT name_last FROM customer WHERE id = ' . $criteria);
-	
-	$query = $this->db->query('SELECT * FROM card NATURAL JOIN credit_cards NATURAL JOIN customer' .
-		' WHERE (name_first LIKE \'' . $name_first->result()[0]->name_first . 
-		'\' OR name_last LIKE \'' . $name_last->result()[0]->name_last . 
-		'\') AND is_approved = FALSE AND credit_cards.customer_number=card.card_number');
+	$query = $this->db->query('SELECT * FROM card JOIN credit_cards' .
+		' WHERE is_approved = FALSE AND credit_cards.card_number=card.card_number' .
+		' AND credit_cards.cust_id=' . $cust_id);
 	
 	$table = '';
 	
 	foreach ($query->result() as $row)
 	{
-		$fields = $row->id . '\t' . 
+		$fields = $row->cust_id . '\t' . 
 				  $row->card_number . '\t' . 
 				  $row->PIN . '\t' . 
 				  $row->valid_until . '\t' . 
-				  $row->name_first . '\t' . 
-				  $row->name_last . '\t' . 
+				  $name_first . '\t' . 
+				  $name_last . '\t' . 
 				  $row->is_approved;
 		$table = $table . '\n' . $fields;
 	}
@@ -243,25 +243,27 @@ Class customerAssistant extends CI_Model
 	return $table;
  }
  
- function searchLoan($loan){
+ function searchLoan($name_first, $name_last){
 	
-	$name_first = $this->db->query('SELECT name_first FROM customer WHERE id = ' . $loan);
+	$query = $this->db->query('SELECT id FROM customer' . 
+		' WHERE name_first LIKE \'' . $name_first . 
+		'\' AND name_last LIKE \'' . $name_last . 
+		'\'');
+	$cust_id = $query->result()[0]->id;
+	echo "<script>alert('" . $cust_id . "')</script>";
 	
-	$name_last = $this->db->query('SELECT name_last FROM customer WHERE id = ' . $loan);
-	
-	$query = $this->db->query('SELECT * FROM loan NATURAL JOIN borrowing NATURAL JOIN customer' .
-		' WHERE (name_first LIKE \'' . $name_first->result()[0]->name_first . 
-		'\' OR name_last LIKE \'' . $name_last->result()[0]->name_last . 
-		'\') AND is_approved = FALSE AND loan.loan_id=borrowing.loan_id');
+	$query = $this->db->query('SELECT * FROM loan JOIN borrowing' .
+		' WHERE is_approved = FALSE AND borrowing.loan_id=loan.loan_id' .
+		' AND borrowing.cid=' . $cust_id);
 	
 	$table = '';
 	
 	foreach ($query->result() as $row)
 	{
-		$fields = $row->id . '\t' . $row->loan_id . '\t' . 
+		$fields = $cust_id . '\t' . $row->loan_id . '\t' . 
 			$row->date_given . '\t' . $row->date_due . '\t' . 
-			$row->interest_rate . '\t' . $row->name_first . '\t' . 
-			$row->name_last . '\t' . $row->is_approved;
+			$row->interest_rate . '\t' . $name_first . '\t' . 
+			$name_last . '\t' . $row->is_approved;
 		$table = $table . '\n' . $fields;
 	}
 	
