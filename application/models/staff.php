@@ -80,6 +80,45 @@ Class staff extends CI_Model
     );
    $this -> db -> insert('customer_assistant', $row);
  }
+  function updateInfo($id,$salary,$name,$surname, $phone_number,$address, $password){
+	$data = array();
+	$change = false;
+	if(!empty($salary)){
+		$data['salary'] = $salary;
+		$change= true;
+	}
+	if(!empty($name)){
+		$data['name'] = $name;
+		$change= true;
+	}
+	if(!empty($surname)){
+		$data['surname'] = $surname;
+		$change= true;
+	}
+	if(!empty($phone_number)){
+		$data['phone_number'] = $phone_number;
+		$change= true;
+	}
+	if(!empty($address)){
+		$data['address'] = $address;
+		$change= true;
+	}
+	if($change){
+		$this->db->where('id', $id);
+		$this->db->update('staff', $data); 
+	}
+	$change= false;
+	$data = array();
+	if(!empty($password)){
+		$data['password'] = $password;
+		$change= true;
+	}
+	if($change){
+		$this->db->where('username', $id);
+		$this->db->update('user', $data); 
+	}
+  
+  }
 
 
 	 

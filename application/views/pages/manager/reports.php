@@ -12,9 +12,9 @@
 
 
 <div class="frame">
-<h2> Addition of New Employee</h2>
+<h2> Select name of report from drop down menu</h2>
   <!.. <form method="post" action="managerHome/add_Employee">
-		<p> Select name of report from drop down menu </p>
+		
 		
 		<!..<input type="submit" value="submit" name="submit" />
 		<br />

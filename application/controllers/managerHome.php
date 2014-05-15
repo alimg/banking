@@ -147,6 +147,7 @@ class managerHome extends CI_Controller {
 						$id = $this->unique_id();
 						$this->atm->add($id,$address,$balance,$branch_name, $this->bank->get()[0]->bank_id );
 						
+
 					}
 					
 					else{
@@ -298,11 +299,12 @@ class managerHome extends CI_Controller {
 						//echo "is admin : $is_admin";
 		
 						if($type == "new_manager"){
-							if($is_admin == "admin"){
+							/*if($is_admin == "admin"){
 								$admin = 1;
 							}else if ($is_admin == "not_admin"){
 								$admin = 0;
-							}
+							}*/
+							$admin = 0;
 							$this->staff->addManager($id,$admin);
 						}
 						if($type =="new_clerk" ){
@@ -337,6 +339,74 @@ class managerHome extends CI_Controller {
 			}
 	
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////reports
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function reports(){
+		if($this->session->userdata('logged_in'))
+        {
+			$session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+			
+			
+            $this->load->view('pages/manager/reports');
+            
+		}
+		else
+		{
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+		}
+	
+	}
+	public function manager_update_info(){
+		if($this->session->userdata('logged_in'))
+        {
+			$session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            
+            $data['username'] = $session_data['username'];
+            $data['title'] = $this->bank->get()[0]->name;
+            $data['manager'] = $manager;
+            $data['showlogout']=true;
+            $this->load->view('pages/manager/manager_update_info');
+			if (isset($_POST['submit'])){
+			
+				$salary = $_POST['salary'];
+				$name = $_POST['name'];
+				$surname = $_POST['surname'];
+				$phone_number = $_POST['phone_number'];
+				$address = $_POST['address'];
+				$password = $_POST['password'];
+				
+				$this->staff->updateInfo($uid,$salary,$name,$surname, $phone_number,$address, $password);
+				redirect('managerHome#home', 'refresh');
+			}
+				
+
+				
+							
+		}
+		else
+		{
+            //If no session, redirect to login page
+            redirect('login', 'refresh');
+		}
+	
+	}
+	
+	
+	
 	function unique_id($l = 8) {
     return substr(md5(uniqid(mt_rand(), true)), 0, $l);
 	}

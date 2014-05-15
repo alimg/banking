@@ -22,14 +22,14 @@
 			</select><br>
           
 		</p>
-		<p> Admin ("use for only manager employees") 
+	<!--	<p> Admin ("use for only manager employees") 
 			<select name="is_admin">
 				<option value="admin">Admin</option>
 				<option value="not_admin">Not an admin</option>
 				
-			</select><br>
+			</select>
           
-		</p>
+		</p>  -->
 		<p> Which branch employ this new employee?
 			<select name="branch_name">
 			<?php
