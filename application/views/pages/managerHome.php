@@ -14,6 +14,9 @@ if ($manager==false){
     p.addClass('selected');
     $("#sub_page").load("managerHome/"+page);
   }
+	window.onload = function() {
+		openPage(this,'man_home');
+	}
 </script>
 
 <div class="frame">

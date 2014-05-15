@@ -138,14 +138,16 @@ class CustomerAssistantHome extends CI_Controller {
 				redirect('CustomerAssistantHome', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Criteria Request'){
-			if (!empty($_POST['criteria'])){
-				$criteria = $_POST['criteria'];
+			if (!empty($_POST['name_first']) && !empty($_POST['name_last'])){
+				
+				$name_first = $_POST['name_first'];
+				$name_last = $_POST['name_last'];
 				
 				$session_data = $this->session->userdata('logged_in');
 				
 				$uid=$session_data['username'];
 				$customerAssistant=$this->user->isCustomerAssistant($uid);
-				$table = $this->customerAssistant->searchCard($criteria);
+				$table = $this->customerAssistant->searchCard($name_first, $name_last);
 				
 				$data['table'] = $table;
 				$data['type'] = 'criteria';
@@ -164,13 +166,14 @@ class CustomerAssistantHome extends CI_Controller {
 				redirect('CustomerAssistantHome', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Loan Request'){
-			if (!empty($_POST['loan'])){
-				$loan = $_POST['loan'];
+			if (!empty($_POST['name_first']) && !empty($_POST['name_last'])){
+				$name_first = $_POST['name_first'];
+				$name_last = $_POST['name_last'];
 				
 				$session_data = $this->session->userdata('logged_in');
 				$uid=$session_data['username'];
 				$customerAssistant=$this->user->isCustomerAssistant($uid);
-				$table = $this->customerAssistant->searchLoan($loan);
+				$table = $this->customerAssistant->searchLoan($name_first, $name_last);
 				
 				$data['table'] = $table;
 				$data['type'] = 'loan';
