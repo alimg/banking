@@ -1,11 +1,6 @@
-<div class="container">Welcome <?php echo $username?><br>
+<div class="container"><br>
 
-<?php 
-if ($clerk==false){
-  ?>You are not a clerk<?php
-  exit(0);
-}
-?>
+
 
 <script>
   function openPage(e,page) {

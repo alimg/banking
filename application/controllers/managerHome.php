@@ -111,7 +111,7 @@ class managerHome extends CI_Controller {
 			$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
 			
 			$data['atm_list'] = $this->atm->deleteAtm($atm_id);
-            $this->load->view('pages/manager/atm_management', $data);
+           
             
 		}
 		else

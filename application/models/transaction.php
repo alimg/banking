@@ -1,7 +1,7 @@
 <?php
 Class Transaction extends CI_Model
 {
- function transaction($cid, $aid, $atm_id, $amount,$date, $type )
+ function add($cid, $aid, $atm_id, $amount,$date, $type )
  {
 	$data = array(
 		'cid' => $cid ,
@@ -16,4 +16,13 @@ Class Transaction extends CI_Model
 
 
  }
+ 
+ public function searchTransaction($id){
+	$this->db->where("cid",$id);
+	$query=$this->db->get("transactions");
+	if($query->num_rows()>0){
+		return $query->result();
+	}else return false;
+ }
+}
 ?>
