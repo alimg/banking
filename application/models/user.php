@@ -13,7 +13,7 @@ Class User extends CI_Model
    $this -> db -> limit(1);
 
    $query = $this->db->get('user');
-      
+    
    if($query -> num_rows() == 1)
    {
      // 
@@ -24,6 +24,7 @@ Class User extends CI_Model
      return false;
    }
  }
+ 
  function isCustomer($userid) {
    $this -> db -> where('id', $userid);
    $this -> db -> limit(1);
@@ -37,6 +38,31 @@ Class User extends CI_Model
    }
  }
  
+ function isCustomerAssistant($userid) {
+   $this -> db -> where('id', $userid);
+   $this -> db -> limit(1);
+
+   $query = $this->db->get('customer_assistant');
+      
+   if($query -> num_rows() == 1) {
+     return $query->result();
+   } else {
+     return false;
+   }
+ }
+ 
+ function isBusinessAccount($userid) {
+   $this -> db -> where('id', $userid);
+   $this -> db -> limit(1);
+
+   $query = $this->db->get('customer');
+      
+   if($query -> num_rows() == 1) {
+     return $query->result();
+   } else {
+     return false;
+   }
+ }
 }
 ?>
  

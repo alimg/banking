@@ -5,7 +5,8 @@
           <option value="customer">Customer</option>
           <option value="manager">Manager</option>
           <option value="clerk">Clerk</option>
-          <option value="assistant">Customer Assistant</option>
+          <option value="customerAssistant">Customer Assistant</option>
+          <option value="business">Business Account User</option>
         </select><br>
           
         <input type="text" name="userid"><br>

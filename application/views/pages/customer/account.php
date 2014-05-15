@@ -1,4 +1,4 @@
-<p>Your Accounts:</p>
+<p>Personal Information:</p>
 <table>
-    
+     <?php echo $username: ?>
 </table>

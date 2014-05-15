@@ -27,12 +27,12 @@ class Login extends CI_Controller {
             $usertype=$_POST["usertype"];
         if($usertype=='manager'){
             redirect('managerHome', 'refresh');
-        }
-        else if($usertype=='clerk'){
+        }else if($usertype=='clerk'){
             redirect('clerkHome', 'refresh');
-        }
-        else if($usertype=='assistant'){
-            redirect('assistant', 'refresh');
+        }else if($usertype=='customerAssistant'){
+            redirect('customerAssistantHome', 'refresh');
+        }else if($usertype=='business'){
+            redirect('businessHome', 'refresh');
         }else{
             redirect('customerHome', 'refresh');
         }
