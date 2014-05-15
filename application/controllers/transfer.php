@@ -74,7 +74,7 @@ class Transfer extends CI_Controller {
             $description = $_POST['description'];
             $date = date('Y-m-d H:i:s');
             $result = $this->account->transfer($account_source,$account_target,$uid, $amount, $date, $description);
-            
+            $data['result']=$result;
             $this->load->view('templates/header',$data);
             $this->load->view('pages/customer/transferDone',$data);
             $this->load->view('templates/footer',$data);

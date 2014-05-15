@@ -198,6 +198,44 @@ CREATE TABLE credit_cards(cust_id CHAR(8),
 	FOREIGN KEY (card_number) REFERENCES credit_card(card_number),
 	FOREIGN KEY (cust_id) REFERENCES customer(id)) ENGINE=InnoDB;
 
+/*1) BusinessCustomer View*/
+CREATE VIEW business_customer AS
+        SELECT C.* FROM customer C, customer_accounts R, business_account B
+        WHERE C.id=R.cid and R.aid=B.id;
+
+
+/*2) View Accounts of the Same Branch with Stuff*/
+/*
+CREATE VIEW branch_accounts AS
+        SELECT * FROM account NATURAL JOIN
+        (SELECT id, 'Business Account' as type FROM business_account
+        UNION
+        SELECT id, 'Saving Account' as type FROM saving_account)
+        WHERE bank_id=@bank_id and branch_name=@bname;*/
+/*
+CREATE TRIGGER ATM_out_of_money
+        AFTER UPDATE OF balance ON (atm)
+REFERENCING NEW ROW AS nrow
+REFERENCING OLD ROW AS orow
+WHEN nrow.balance < 0 AND orow.balance IS NOT NULL
+BEGIN ATOMIC
+        UPDATE transactions T
+        SET (
+                SELECT amount FROM T
+                WHERE T.aid = orow.atm_id
+                ).amount = orow.balance
+        SET nrow.balance = 0;
+END;
+
+CREATE TRIGGER acc_money 
+        AFTER UPDATE OF balance ON (account)
+REFERENCING NEW ROW AS nrow
+REFERENCING OLD ROW AS orow
+WHEN nrow.balance < 0 AND orow.balance IS NOT NULL
+BEGIN
+        ROLLBACK
+END;
+*/
 
 
 INSERT INTO `user` (`username`, `password`) VALUES ('root', 'root');
@@ -206,6 +244,9 @@ INSERT INTO `bank` (`bank_id`, `name`) VALUES ('1', 'The Bank of Isengard');
 INSERT INTO `branch` (`name`, `bank_id`, `address`, `balance`) VALUES ('bilkent', '1', 'bilkent', '180000');
 INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('9000', '1', 'bilkent', '789789789789789789789', '500', 'tl', '2014-05-13');
 INSERT INTO `customer_accounts` (`cid`, `aid`) VALUES ('root', '9000');
-INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
-
-
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4004', '78', '2014-05-23');
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4006', '52', '2014-05-30');
+INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('4007', '64', '2014-05-30');
+INSERT INTO `corporation` (`company_id`, `name`, `account_IBAN`) VALUES ('1001', 'ASKI', '1234123412341234');
+INSERT INTO `bill_target` (`bill_id`, `company_id`) VALUES ('4004', '1001');
+INSERT INTO `account` (`id`, `bank_id`, `branch_name`, `IBAN`, `balance`, `currency`, `dateCreated`) VALUES ('rand1233', '1', 'bilkent', '1234123412341234', '0', 'tl', '2014-05-14 00:00:00');

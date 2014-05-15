@@ -18,10 +18,10 @@ class Bills extends CI_Controller {
 	}
     
     public function get( $id ) {
-        $bill = $this->bill->get($id);
+        $bill = $this->bill->getWithCompany($id);
         if($bill)
-            echo $bill[0]->amount;
-        else echo "";
+            echo "{\"status\":\"success\",\"amount\":\"{$bill[0]->amount}\",\"company\":\"{$bill[0]->name}\"}";
+        else echo '{"status":"error"}';
     }
     
     public function pay( $id, $accountid ) {
@@ -29,12 +29,13 @@ class Bills extends CI_Controller {
         $session_data = $this->session->userdata('logged_in');
         
         if($bill && $session_data){
-            //$uid=$session_data['username'];
-            //$accounts = $this->account->getCustomerAccounts($uid);
-            if($this->bill->pay($id,$accountid)) 
-                echo "success";
-            else echo "error";
-        }else echo "error";
+            if(!$this->bill->isPaid($id)){
+                $uid=$session_data['username'];
+                if($this->bill->pay($uid,$id,$accountid)) 
+                    echo "success";
+                else echo "Error: Transaction incomplete";
+            } else echo "Error: This bill is already paid.";
+        }else echo "Error: No such item";
     }
     
 }

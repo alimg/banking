@@ -67,10 +67,17 @@ Class Account extends CI_Model
       'date' => $date,
       'description' => $description,
    );
-   $query = $this->db->query("UPDATE account SET balance=balance+$amount WHERE id=$to_id;");
-   $query = $this->db->query("UPDATE account SET balance=balance-$amount WHERE id=$from_id;");
-   $query = $this->db->insert('money_transfers',$row);
    
+   $query = $this->db->query("UPDATE account SET balance=balance-$amount WHERE id='$from_id';");
+   if(!$query)
+      return false;
+   $query = $this->db->query("UPDATE account SET balance=balance+$amount WHERE id='$to_id';");
+   if(!$query)
+      return false;
+   $query = $this->db->insert('money_transfers',$row);
+   if(!$query)
+      return false;
+   return true;
  }
  
 }
