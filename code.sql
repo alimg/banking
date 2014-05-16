@@ -30,8 +30,7 @@ CREATE TABLE account (id CHAR(8) PRIMARY KEY,
 	balance DOUBLE,
 	currency CHAR(3),
 	dateCreated DATETIME,
-	FOREIGN KEY (bank_id) REFERENCES branch(bank_id),
-	FOREIGN KEY (branch_name) REFERENCES branch(name)) ENGINE=InnoDB;
+	FOREIGN KEY (bank_id,branch_name) REFERENCES branch(bank_id,name)) ENGINE=InnoDB;
 	
 CREATE TABLE saving_account (id CHAR(8) PRIMARY KEY,
 	interest_rate DOUBLE,
@@ -294,6 +293,9 @@ INSERT INTO `credit_cards` (`cust_id`, `card_number`) VALUES ('32588', '534535')
 INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
 
 INSERT INTO `staff` (`id`, `salary`, `name`, `surname`, `phone_number`, `address`) VALUES ('1234', '11111', 'Hakan', 'Osman2', '9999999', 'Birmingham');
+INSERT INTO `staff` (`id`, `salary`, `name`, `surname`, `phone_number`, `address`) VALUES ('root', '0', 'root', 'root', '-', '-');
+
+INSERT INTO `manager` (`id`, `admin`) VALUES ('root', '1');
 
 INSERT INTO `customer_assistant` (`id`) VALUES ('1234');
 	

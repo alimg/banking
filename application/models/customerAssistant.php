@@ -83,7 +83,7 @@ Class customerAssistant extends CI_Model
 	
 	$row = array (
 		'id' => $aid,
-		'bank_id' => '001', // Should stay the same
+		'bank_id' => '1', // Should stay the same
 		'branch_name' => $bName,
 		'IBAN' => $iban,
 		'balance' => 0,
@@ -125,7 +125,7 @@ Class customerAssistant extends CI_Model
 	
 	$row = array (
 		'id' => $aid,
-		'bank_id' => '001', // Should stay the same
+		'bank_id' => '1', // Should stay the same
 		'branch_name' => $bName,
 		'IBAN' => $iban,
 		'balance' => 0,
@@ -160,7 +160,7 @@ Class customerAssistant extends CI_Model
 	
 	$row = array (
 		'id' => $aid,
-		'bank_id' => '001', // Should stay the same
+		'bank_id' => '1', // Should stay the same
 		'branch_name' => $bName,
 		'IBAN' => $iban,
 		'balance' => 0,
@@ -196,7 +196,7 @@ Class customerAssistant extends CI_Model
 	
 	$row = array (
 		'id' => $aid,
-		'bank_id' => '001', // Should stay the same
+		'bank_id' => '1', // Should stay the same
 		'branch_name' => $bName,
 		'IBAN' => $iban,
 		'balance' => 0,
@@ -215,6 +215,35 @@ Class customerAssistant extends CI_Model
 	
 	redirect('customerAssistantHome', 'refresh');
  }
+ 
+ function searchCardWithID($cust_id){
+	$query = $this->db->query('SELECT name_first, name_last FROM customer' . 
+		' WHERE customer.id=\'' . $cust_id . '\'');
+	$name_first = $query->result()[0]->name_first;
+	$name_last = $query->result()[0]->name_last;
+	
+	$query = $this->db->query('SELECT * FROM card JOIN credit_cards' .
+		' WHERE is_approved = FALSE AND credit_cards.card_number=card.card_number' .
+		' AND credit_cards.cust_id=' . $cust_id);
+		
+	
+	$table = '';
+	
+	foreach ($query->result() as $row)
+	{
+		$fields = $row->cust_id . '\t' . 
+				  $row->card_number . '\t' . 
+				  $row->PIN . '\t' . 
+				  $row->valid_until . '\t' . 
+				  $name_first . '\t' . 
+				  $name_last . '\t' . 
+				  $row->is_approved;
+		$table = $table . '\n' . $fields;
+	}
+	
+	return $table;
+ }
+ 
  function searchCard($name_first, $name_last){
 	$query = $this->db->query('SELECT id FROM customer' . 
 		' WHERE name_first LIKE \'' . $name_first . 
@@ -242,7 +271,31 @@ Class customerAssistant extends CI_Model
 	
 	return $table;
  }
- 
+  function searchLoanWithID($cust_id){
+	$query = $this->db->query('SELECT name_first, name_last FROM customer' . 
+		' WHERE customer.id=\'' . $cust_id . '\'');
+	
+	$name_first = $query->result()[0]->name_first;
+	$name_last = $query->result()[0]->name_last;
+	
+	$query = $this->db->query('SELECT * FROM loan JOIN borrowing' .
+		' WHERE is_approved = FALSE AND borrowing.loan_id=loan.loan_id' .
+		' AND borrowing.cid=' . $cust_id);
+		
+	$table = '';
+	
+	foreach ($query->result() as $row)
+	{
+		$fields = $cust_id . '\t' . $row->loan_id . '\t' . 
+			$row->date_given . '\t' . $row->date_due . '\t' . 
+			$row->interest_rate . '\t' . $name_first . '\t' . 
+			$name_last . '\t' . $row->is_approved;
+		$table = $table . '\n' . $fields;
+	}
+	
+	return $table;
+  }
+  
  function searchLoan($name_first, $name_last){
 	
 	$query = $this->db->query('SELECT id FROM customer' . 
@@ -250,7 +303,6 @@ Class customerAssistant extends CI_Model
 		'\' AND name_last LIKE \'' . $name_last . 
 		'\'');
 	$cust_id = $query->result()[0]->id;
-	echo "<script>alert('" . $cust_id . "')</script>";
 	
 	$query = $this->db->query('SELECT * FROM loan JOIN borrowing' .
 		' WHERE is_approved = FALSE AND borrowing.loan_id=loan.loan_id' .

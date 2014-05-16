@@ -21,7 +21,7 @@ b.pos_right
 
 <h1>Customer Personal Information:</h1><br>
 
-<form action="CustomerAssistantHome" method="post" >
+<form action="customerAssistantHome" method="post" >
 	<b class="pos_right"><?php echo "First Name: "?><input type="text" name="firstName"></b>
 		<b class="pos_right"><?php echo "Last Name: "?><input type="text" name="lastName"></b><br><br>
 	<b class="pos_right"><?php echo "Branch Name: "?><input type="text" name="bName"></b><br><br>
