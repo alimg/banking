@@ -1,13 +1,7 @@
-<div class="container"><br>
+<br>
 
 
 <script>
-  function openPage(e,page) {
-    p = $(e).parent();
-    p.parent().children().removeClass('selected');
-    p.addClass('selected');
-    $("#sub_page").load("managerHome/"+page);
-  }
   function fire(id){
 	$.ajax({ url: "managerHome/fireEmployee/"+id})
                 .done(function(data) {
@@ -18,6 +12,8 @@
   function updateSalary(id){
 	selectedId = id;
 	$("#_id").val(""+ id);
+        $("#light").show();
+        $("#fade").show();
   }
 </script>
 
@@ -52,8 +48,8 @@
   ?>
  </tbody>
 </table>
-<div>
-for updating salary
+<div hidden id="light" class="white_content">
+  Enter Salary
  <form method="post" action="managerHome/updateSalary">
 		<p> Salary <input type="text" name="salary" /> </p>
 		<input id = "_id" type="text" value="" name="id" hidden/>
@@ -61,11 +57,11 @@ for updating salary
 		<br />
 	</form>
 </div>
+    <div id="fade" class="black_overlay" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'"></div>
 <div> 
 <p>Atm List:
 	<a  href="#" onclick="openPage(this,'add_employee')">
 	<button>Add New Employee</button>
 	</a> </p>
-</div>
 </div>
 </div>
