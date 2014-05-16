@@ -36,3 +36,4 @@ if ($customer==false){
   </div>
 </div>
 </div>
+<a href="/virtualAtm">virtual atm</a>
