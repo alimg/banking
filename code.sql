@@ -132,7 +132,7 @@ CREATE TABLE transactions(cid CHAR(8),
 	date DATETIME,
 	type CHAR(8),
 	CHECK (type IN ('deposit', 'withdraw')),
-	PRIMARY KEY (cid, aid, atm_id),
+	PRIMARY KEY (cid, aid, date),
 	FOREIGN KEY (cid) REFERENCES customer(id),
 	FOREIGN KEY (aid) REFERENCES account(id),
 	FOREIGN KEY (atm_id) REFERENCES atm(atm_id)) ENGINE=InnoDB;

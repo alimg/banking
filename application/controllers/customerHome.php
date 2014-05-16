@@ -21,7 +21,7 @@ class CustomerHome extends CI_Controller {
             $uid=$session_data['username'];
             $customer=$this->user->isCustomer($uid);
             if(!$customer){
-                echo"yuo not custmoer";
+                echo "You are not a customer";
                 return;
             }
             $data['username'] = $session_data['username'];

@@ -17,7 +17,7 @@ if ($business==false){
 
 <div class="frame">
   <h1>POS Payment Options</h1><br>
-	<form action="BusinessHome" method="post">
+	<form action="businessHome" method="post">
 		<b class="pos_right"><?php echo "Card Number: "?><input type="text" name="card_num"></b><br><br>
 		<b class="pos_right"><?php echo "Total Amount: "?><input type="text" name="tot_amount"></b><br><br>
 		<b class="pos_right"><?php echo "Installment Amount: "?>

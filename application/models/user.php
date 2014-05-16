@@ -55,7 +55,7 @@ Class User extends CI_Model
    $this -> db -> where('id', $userid);
    $this -> db -> limit(1);
 
-   $query = $this->db->get('customer');
+   $query = $this->db->get('business_customer');
       
    if($query -> num_rows() == 1) {
      return $query->result();
