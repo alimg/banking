@@ -33,5 +33,16 @@ Class Loan extends CI_Model
       $this->db->insert('borrowing',$row2);
       
    }
+   public function getLoanList($cid){
+	$sql="SELECT amount, interest_rate, date_given, date_due FROM borrowing as b, loan as l, customer as c WHERE c.id = '$cid' && l.loan_id = b.loan_id;";
+	$query = $this->db->query($sql);
+	if($query -> num_rows() > 0) {
+		return $query->result();
+	}else {
+		return false;
+	}
+   
+   
+   }
  
 }

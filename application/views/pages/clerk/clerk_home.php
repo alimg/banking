@@ -10,7 +10,7 @@
 		
 	</form>
 	<div>
-	Customer Name: <?php if(isset($customerName))echo $customerName?><br>
+	Customer Name: <?php echo $customerName?><br>
 	Accounts: <select id="selAccounts">   
 	<?php 
 		if(isset($accounts) && $accounts){
