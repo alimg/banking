@@ -12,7 +12,7 @@ p.pos_right
 }
 </style>
 
-<form action="CustomerAssistantHome" method="post" >
+<form action="customerAssistantHome" method="post" >
 	<br><br>
 	<div class="frame">
 		<b class="pos_right"><?php echo "Enter Customer's First Name: "?><input type="text" name="name_first"></b><br><br>
