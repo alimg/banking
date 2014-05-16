@@ -9,7 +9,7 @@ b.pos_right
 
 <h1>Personal Information:</h1><br>
 
-<form action="CustomerAssistantHome" method="post" >
+<form action="customerAssistantHome" method="post" >
 	<b class="pos_right"><?php echo "First Name: "?><input type="text" name="name_first"></b><br><br>
 	<b class="pos_right"><?php echo "Last Name: "?><input type="text" name="name_last"></b><br><br>
 	<b class="pos_right"><?php echo "Phone: "?><input type="text" name="phone"></b><br><br>

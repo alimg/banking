@@ -16,34 +16,94 @@ class managerHome extends CI_Controller {
     }
     
     public function index(){
-		if($this->session->userdata('logged_in'))
-        {
-		   $session_data = $this->session->userdata('logged_in');
-            
-            $uid=$session_data['username'];
-            $manager=$this->manager->isManager($uid);
-            if(!$manager){
-                echo "You are not manager";
-                return;
-            }
-            
-            $data['username'] = $session_data['username'];
-            $data['title'] = $this->bank->get()[0]->name;
-            $data['manager'] = $manager;
-            $data['showlogout']=true;
-			
-			$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
-			$data['atm_list'] = $this->atm->getAtmList($this->bank->get()[0]->bank_id);
-            $this->load->view('templates/header',$data);
-            $this->load->view('pages/managerHome');
-            $this->load->view('templates/footer',$data);
+		if (!isset($_POST['submit'])){
+			if($this->session->userdata('logged_in'))
+			{
+			   $session_data = $this->session->userdata('logged_in');
+				
+				$uid=$session_data['username'];
+				$manager=$this->manager->isManager($uid);
+				
+				$data['table'] = '';
+				$data['type'] = '';
+				$data['username'] = $session_data['username'];
+				$data['title'] = $this->bank->get()[0]->name;
+				$data['manager'] = $manager;
+				$data['showlogout']=true;
+				
+				$data['branch_list'] = $this->branch->getBranchList($this->bank->get()[0]->bank_id);
+				$data['atm_list'] = $this->atm->getAtmList($this->bank->get()[0]->bank_id);
+				$this->load->view('templates/header',$data);
+				$this->load->view('pages/managerHome');
+				$this->load->view('templates/footer',$data);
+			}else{
+				//If no session, redirect to login page
+				redirect('login', 'refresh');
+			}
+		}else if($_POST['submit'] == "Submit Report"){
+			if($_POST['rep'] == "rep1"){
+				
+				$session_data = $this->session->userdata('logged_in');
+				
+				$uid=$session_data['username'];
+				$manager=$this->manager->isManager($uid);
+				$table = $this->manager->showReport1($_POST['name']);
+				
+				$data['table'] = $table;
+				$data['type'] = 'rep1';
+				$data['username'] = $session_data['username'];
+				$data['title'] = "The Bank of Isengard";
+				$data['manager'] = $manager;
+				$data['showlogout']=true;
+				
+				
+				$this->load->view('templates/header',$data);
+				$this->load->view('pages/managerHome',$data);
+				$this->load->view('templates/footer',$data);
+			}else if($_POST['rep'] == "rep2"){
+				$session_data = $this->session->userdata('logged_in');
+				
+				$uid=$session_data['username'];
+				$manager=$this->manager->isManager($uid);
+				$table = $this->manager->showReport2($_POST['name_first'], 
+					$_POST['name_last'], 
+					$_POST['trans'], 
+					$_POST['dateStart'], 
+					$_POST['dateEnd']);
+				
+				$data['table'] = $table;
+				$data['type'] = 'rep2';
+				$data['username'] = $session_data['username'];
+				$data['title'] = "The Bank of Isengard";
+				$data['manager'] = $manager;
+				$data['showlogout']=true;
+				
+				
+				$this->load->view('templates/header',$data);
+				$this->load->view('pages/managerHome',$data);
+				$this->load->view('templates/footer',$data);
+			}else if($_POST['rep'] == "rep3"){
+				$session_data = $this->session->userdata('logged_in');
+				
+				$uid=$session_data['username'];
+				$manager=$this->manager->isManager($uid);
+				$table = $this->manager->showReport3($_POST['cid']);
+				
+				$data['table'] = $table;
+				$data['type'] = 'rep3';
+				$data['username'] = $session_data['username'];
+				$data['title'] = "The Bank of Isengard";
+				$data['manager'] = $manager;
+				$data['showlogout']=true;
+				
+				
+				$this->load->view('templates/header',$data);
+				$this->load->view('pages/managerHome',$data);
+				$this->load->view('templates/footer',$data);
+			}
 		}
-		else
-		{
-            //If no session, redirect to login page
-            redirect('login', 'refresh');
-		}
-    }
+	}
+
 	public function man_home(){
 		 if($this->session->userdata('logged_in'))
         {
@@ -170,6 +230,7 @@ class managerHome extends CI_Controller {
 	
 	
 	}
+	
 	public function employment_management(){
 	if($this->session->userdata('logged_in'))
         {

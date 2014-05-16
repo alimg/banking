@@ -38,7 +38,7 @@ Class User extends CI_Model
    }
  }
  
- function isCustomerAssistant($userid) {
+ function iscustomerAssistant($userid) {
    $this -> db -> where('id', $userid);
    $this -> db -> limit(1);
 

@@ -99,7 +99,7 @@ if ($customerAssistant==false){
 					}
 					if(!empty($row)){
 						echo "<td>" . 
-								 "<form action=\"CustomerAssistantHome\" method=\"post\" >" . 
+								 "<form action=\"customerAssistantHome\" method=\"post\" >" . 
 								 "<input type=\"hidden\" name=\"cust_id\" value=\"" . $cust_id . "\">" . 
 								 "<input type=\"hidden\" name=\"card_num\" value=\"" . $card_num . "\">" . 
 								 "<input type=\"submit\" name=\"submit\" value=\"Approve Card\">" . 
@@ -144,7 +144,7 @@ if ($customerAssistant==false){
 					}
 					if(!empty($row)){
 						echo "<td>" . 
-								 "<form action=\"CustomerAssistantHome\" method=\"post\" >" . 
+								 "<form action=\"customerAssistantHome\" method=\"post\" >" . 
 								 "<input type=\"hidden\" name=\"cust_id\" value=\"" . $cust_id . "\">" . 
 								 "<input type=\"hidden\" name=\"loan_id\" value=\"" . $loan_id . "\">" . 
 								 "<input type=\"submit\" name=\"submit\" value=\"Approve Loan\">" . 
