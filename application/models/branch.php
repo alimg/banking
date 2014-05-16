@@ -55,6 +55,16 @@ Class Branch extends CI_Model
    $this->db->delete('branch');
  }
  
+ function editBranch($name,$bank,$address,$balance){
+   $row=array(
+      'address'=>$address,
+      'balance'=>$balance);
+   $this->db->where('name',$name);
+   $this->db->where('bank_id',$bank);
+   $this->db->update('branch',$row);
+ }
+ 
+ 
 }
 ?>
  

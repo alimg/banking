@@ -469,8 +469,28 @@ class managerHome extends CI_Controller {
             redirect('managerHome#branches','refresh');
         }
     }
+    
+    public function editBranch(){
+        if($this->session->userdata('logged_in'))
+        {
+		   $session_data = $this->session->userdata('logged_in');
+            
+            $uid=$session_data['username'];
+            $manager=$this->manager->isManager($uid);
+            if(!$manager[0]->admin){
+                return;
+            }
+            $bank=$this->bank->get()[0]->bank_id;
+            $name=$_POST['name'];
+            $address=$_POST['address'];
+            $balance=$_POST['balance'];
+            $this->branch->editBranch($name,$bank,$address,$balance);
+            redirect('managerHome#branches','refresh');
+        }
+    }
+    
 	function unique_id($l = 8) {
-    return substr(md5(uniqid(mt_rand(), true)), 0, $l);
+        return substr(md5(uniqid(mt_rand(), true)), 0, $l);
 	}
 	
 	
