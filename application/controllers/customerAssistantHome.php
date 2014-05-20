@@ -67,18 +67,26 @@ class customerAssistantHome extends CI_Controller {
 				$pass = $_POST['pass'];
 				$bName = $_POST['bName'];
 				
-				$this->customerAssistant->addCustomer($firstName, 
+				$row = $this->customerAssistant->addCustomer($firstName, 
 					$lastName, 
 					$address, 
 					$birth, 
 					$bName, 
 					$pass);
+                                
+				$data['title'] = "The Bank of Isengard";
+				$data['showlogout']=true;
+                                $data['newCustomer']=$row;
+                                
+				$this->load->view('templates/header',$data);
+				$this->load->view('pages/customerAssistant/accountCreated',$data);
+				$this->load->view('templates/footer',$data);
 				
 			}else{
 				echo "<script>
 				alert('Please fill ALL the areas!');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#cust', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Corp'){
 			if (!empty($_POST['cName']) && !empty($_POST['iban'])){
@@ -91,7 +99,7 @@ class customerAssistantHome extends CI_Controller {
 				echo "<script>
 				alert('Please fill ALL the areas!');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#corp', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Business Account'){
 			if (!empty($_POST['bName']) && !empty($_POST['iban']) && !empty($_POST['cid'])){
@@ -105,7 +113,7 @@ class customerAssistantHome extends CI_Controller {
 				echo "<script>
 				alert('Please fill ALL the areas!');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#account', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Standard Account'){
 			if (!empty($_POST['bName']) && !empty($_POST['iban']) && !empty($_POST['cid'])){
@@ -119,7 +127,7 @@ class customerAssistantHome extends CI_Controller {
 				echo "<script>
 				alert('Please fill ALL the areas!');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#account', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Savings Account'){
 			if (!empty($_POST['bName']) && !empty($_POST['iban']) && !empty($_POST['cid']) && !empty($_POST['dateEnd'])){
@@ -135,10 +143,10 @@ class customerAssistantHome extends CI_Controller {
 				echo "<script>
 				alert('Please fill ALL the areas!');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#account', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Criteria Request'){
-			if (!empty($_POST['name_first']) && !empty($_POST['name_last'])){
+			if (!empty($_POST['name_first']) || !empty($_POST['name_last'])){
 				
 				$name_first = $_POST['name_first'];
 				$name_last = $_POST['name_last'];
@@ -161,12 +169,12 @@ class customerAssistantHome extends CI_Controller {
 				$this->load->view('templates/footer',$data);
 			}else{
 				echo "<script>
-				alert('Please fill ALL the areas!');
+				alert('Please fill at least first or last name.');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#cardReqs', 'refresh');
 			}
 		}else if($_POST['submit'] == 'Submit Loan Request'){
-			if (!empty($_POST['name_first']) && !empty($_POST['name_last'])){
+			if (!empty($_POST['name_first']) || !empty($_POST['name_last'])){
 				$name_first = $_POST['name_first'];
 				$name_last = $_POST['name_last'];
 				
@@ -187,9 +195,9 @@ class customerAssistantHome extends CI_Controller {
 				$this->load->view('templates/footer',$data);
 			}else{
 				echo "<script>
-				alert('Please fill ALL the areas!');
+				alert('Please fill at least first or last name.');
 				</script>";
-				redirect('customerAssistantHome', 'refresh');
+				redirect('customerAssistantHome#loanReqs', 'refresh');
 			}
 		}else if(strpos($_POST['submit'],'Approve Card') !== false){
 			$cust_id = intval($_POST['cust_id']);

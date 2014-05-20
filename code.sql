@@ -198,6 +198,23 @@ CREATE TABLE credit_cards(cust_id CHAR(8),
 	FOREIGN KEY (card_number) REFERENCES credit_card(card_number),
 	FOREIGN KEY (cust_id) REFERENCES customer(id)) ENGINE=InnoDB;
 
+CREATE
+ INDEX
+ iban_index USING BTREE ON account(IBAN);
+CREATE
+ INDEX
+ lname_index USING BTREE ON customer(name_first);
+CREATE
+ INDEX
+ fname_index USING BTREE ON customer(name_last);
+CREATE
+ INDEX
+ mdate_index USING BTREE ON money_transfer(date);
+CREATE
+ INDEX
+ idate_index USING BTREE ON sub_installment(due_date);
+
+
 /*1) BusinessCustomer View*/
 CREATE VIEW business_customer AS
         SELECT C.* FROM customer C, customer_accounts R, business_account B
@@ -291,6 +308,8 @@ INSERT INTO `credit_cards` (`cust_id`, `card_number`) VALUES ('32588', '43214321
 INSERT INTO `credit_cards` (`cust_id`, `card_number`) VALUES ('32588', '534535');
 
 INSERT INTO `bills` (`bill_id`, `amount`, `date`) VALUES ('9834', '78', '2014-05-30');
+INSERT INTO `corporation` (`company_id`, `name`, `account_IBAN`) VALUES ('101', 'EGO', '4325234523');
+INSERT INTO `bill_target` (`bill_id`, `company_id`) VALUES ('9834', '101');
 
 INSERT INTO `staff` (`id`, `salary`, `name`, `surname`, `phone_number`, `address`) VALUES ('1234', '11111', 'Hakan', 'Osman2', '9999999', 'Birmingham');
 INSERT INTO `staff` (`id`, `salary`, `name`, `surname`, `phone_number`, `address`) VALUES ('root', '0', 'root', 'root', '-', '-');

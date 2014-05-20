@@ -1,16 +1,4 @@
-<head>
-  <meta charset="utf-8">
-  <title>jQuery UI Datepicker - Default functionality</title>
-  <script src="js/jquery-1.10.2.js"></script>
-  <script src="js/jquery-ui-1.10.4.custom.js"></script>
-  <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.css">
-  <script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-	
-  });
-  </script>
-</head>
+
 <style>
 b.pos_right
 {
@@ -30,4 +18,8 @@ b.pos_right
 	<p class="pos_right"><textarea name="address" rows="4" cols="50"></textarea></p>
 	<b class="pos_right">Birth Date: <input name="birth" type="text" id="datepicker"></b><br><br>
 	<b class="pos_right"><input name="submit" type="submit" value="Submit Customer"></b><br><br>
-</form>
+</form>  
+
+<script>
+  $( "#datepicker" ).datepicker();
+</script>

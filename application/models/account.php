@@ -27,6 +27,19 @@ Class Account extends CI_Model
    }
  }
  
+ 
+ function getUnasignedAccounts ( ){
+   $sql="SELECT * FROM account A WHERE A.id not in (SELECT R.aid from customer_accounts R);";
+   $query = $this->db->query($sql);
+   //echo $sql;
+   //print_r($query->result());
+   if($query -> num_rows() > 0) {
+     return $query->result();
+   } else {
+     return false;
+   }
+ }
+ 
  function get($id){
    $this->db->where('id',$id);
    $query = $this->db->get('account');

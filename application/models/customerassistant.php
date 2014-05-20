@@ -76,7 +76,7 @@ Class customerAssistant extends CI_Model
 	);
 	
 	$this->db->insert('customer', $row);
-	
+	$customer = $row;
 	// Insert the account row.
 	$aid = rand();
 	$iban = rand();
@@ -90,7 +90,6 @@ Class customerAssistant extends CI_Model
 		'currency' => 'TL',
 		'dateCreated' => date("y-m-d")
 	);
-	
 	$this->db->insert('account', $row);
 	
 	$row = array(
@@ -99,8 +98,7 @@ Class customerAssistant extends CI_Model
 	);
 	
 	$this->db->insert('customer_accounts', $row);
-	
-	redirect('customerAssistantHome', 'refresh');
+	return $customer;
  }
  
  function addCorp($cName, $iban)
@@ -249,6 +247,8 @@ Class customerAssistant extends CI_Model
 		' WHERE name_first LIKE \'' . $name_first . 
 		'\' AND name_last LIKE \'' . $name_last . 
 		'\'');
+        if($query->num_rows()<=0)
+                return '';
 	$cust_id = $query->result()[0]->id;
 	
 	$query = $this->db->query('SELECT * FROM card JOIN credit_cards' .
@@ -302,6 +302,8 @@ Class customerAssistant extends CI_Model
 		' WHERE name_first LIKE \'' . $name_first . 
 		'\' AND name_last LIKE \'' . $name_last . 
 		'\'');
+        if($query->num_rows()<=0)
+                return '';
 	$cust_id = $query->result()[0]->id;
 	
 	$query = $this->db->query('SELECT * FROM loan JOIN borrowing' .

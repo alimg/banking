@@ -51,21 +51,27 @@ if ($customerAssistant==false){
 		}
 	}
 	function openPage(e,page) {
-		p = $(e).parent();
+		p = $(e);
 		p.parent().children().removeClass('selected');
 		p.addClass('selected');
 		$("#sub_page").load("customerAssistantHome/"+page);
 	}
+        $(document).ready(function (){
+            var hash = window.location.hash;
+            if(hash==="")
+              hash="#home"
+            $(""+hash).click();
+        });
 </script>
 
 <div class="frame">
 	<ul class="tabbar">
-		<li><a class="tab-button" onclick="openPage(this,'account')">Home</a></li>
-		<li><a class="tab-button" onclick="openPage(this,'createCustomer')">Create Customer</a></li>
-		<li><a class="tab-button" onclick="openPage(this,'createCorporation')">Create Corporation</a></li>
-		<li><a class="tab-button" onclick="openPage(this,'createAccount')">Create Account</a></li>
-		<li><a class="tab-button" onclick="openPage(this,'cards')">Cards</a></li>
-		<li><a class="tab-button" onclick="openPage(this,'loans')">Loans</a></li>
+		<li id="home" class="tab-button" onclick="openPage(this,'account')"><a>Home</a></li>
+		<li id="cust" class="tab-button" onclick="openPage(this,'createCustomer')"><a>Create Customer</a></li>
+		<li id="corp" class="tab-button" onclick="openPage(this,'createCorporation')"><a>Create Corporation</a></li>
+		<li id="account"  class="tab-button" onclick="openPage(this,'createAccount')"><a>Create Account</a></li>
+		<li id="cardsReqs"  class="tab-button" onclick="openPage(this,'cards')"><a>Cards</a></li>
+		<li id="loansReqs" class="tab-button" onclick="openPage(this,'loans')"><a>Loans</a></li>
 	</ul>
 	<div id="sub_page">
 

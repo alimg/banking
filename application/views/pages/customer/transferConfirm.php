@@ -1,7 +1,7 @@
 <p>Following money transfer is about to be done:</p>
 From account: <?php echo $account_source;?><br>
 To account: <?php echo $account_target->id;?><br>
-Target account owner: <?php echo $account_target_owner[0]->name_first+" "+$account_target_owner[0]->name_last;?><br>
+Target account owner: <?php echo $account_target_owner[0]->name_first." ".$account_target_owner[0]->name_last;?><br>
 Amount: <?php echo $amount?><br>
 Description: <?php echo $description?><br>
 <form action="transfer/confirm" method="post">
